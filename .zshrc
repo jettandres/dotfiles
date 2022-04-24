@@ -128,8 +128,6 @@ export LC_ALL=en_US.UTF-8
 
 fpath=($fpath "/Users/jett/.zfunctions")
 
-_evalcache pyenv init -
-
 timezsh() {
   shell=${1-$SHELL}
   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
