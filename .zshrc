@@ -142,3 +142,7 @@ export TERMINFO=/usr/share/terminfo
 
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=/Users/jett/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+export GPG_TTY=$(tty)
+
+# fzf auto-complete and key bindings
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
