@@ -18,6 +18,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
   Plug 'vim-ruby/vim-ruby'
   Plug 'milch/vim-fastlane'
+  Plug 'jparise/vim-graphql'
 call plug#end()
 
 set encoding=UTF-8
@@ -69,7 +70,7 @@ inoremap <silent><nowait><expr> <C-k> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-j>"
 vnoremap <silent><nowait><expr> <C-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-k>"
 
-let g:coc_node_path="/Users/jett/.nvm/versions/node/v15.11.0/bin/node"
+let g:coc_node_path="/Users/jett/.nvm/versions/node/v16.3.0/bin/node"
 let g:vimspector_enable_mappings="HUMAN"
 
 function! NERDTreeToggleInCurDir()

@@ -5,5 +5,12 @@
   "eslint.lintTask.options": [".", "--ext", ".ts"],
   "coc.preferences.formatOnSaveFiletypes": ["javascript", "javascriptreact", "html", "typescriptreact", "typescript", "go"],
   "prettier.semi": false,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "languageserver": {
+    "graphql": {
+      "command": "graphql-lsp",
+      "args": ["server", "-m", "stream"],
+      "filetypes": ["typescript", "typescriptreact", "graphql"]
+    }
+  }
 }
