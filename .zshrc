@@ -67,9 +67,9 @@ export NVM_COMPLETION=true
 plugins=(
   zsh-nvm
   git
-  github
+  docker
+  docker-compose
   pass
-  evalcache
 )
 source $ZSH/oh-my-zsh.sh
 
