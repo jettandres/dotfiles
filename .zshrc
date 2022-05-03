@@ -128,11 +128,6 @@ export LC_ALL=en_US.UTF-8
 
 fpath=($fpath "/Users/jett/.zfunctions")
 
-timezsh() {
-  shell=${1-$SHELL}
-  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
-}
-
 export BAT_THEME="gruvbox-dark"
 if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
 
@@ -146,3 +141,14 @@ export GPG_TTY=$(tty)
 
 # fzf auto-complete and key bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# Custom Methods
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+gch() {
+  git checkout $(git branch | fzf)
+}
