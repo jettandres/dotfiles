@@ -99,6 +99,10 @@ FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=jflx-xwlj-bcdz-pduf
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# Integrate fd with fzf
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
