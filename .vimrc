@@ -60,7 +60,7 @@ nmap <leader>a <Plug>(coc-codeaction-selected)
 nmap <silent> <C-b> :call NERDTreeToggleInCurDir()<CR>
 nmap <silent> <leader>p :Buffers<CR>
 nmap <leader>fc :Gvdiffsplit!<CR>
-nnoremap <leader>bd :%bd\|e#\|bd#<cr>\|'"
+nmap <silent> <leader>bd :%bd\|e#\|bd#<cr>\|'"
 "nmap <silent> <C-m> :MinimapToggle<CR>
 
 nnoremap <silent><nowait><expr> <C-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-j>"
