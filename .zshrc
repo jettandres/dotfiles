@@ -86,7 +86,7 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
-export JAVA_HOME=/usr/local/Cellar/openjdk@8/1.8.0+322/libexec/openjdk.jdk/Contents/Home/
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home/
 
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/go
