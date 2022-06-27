@@ -19,6 +19,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-ruby/vim-ruby'
   Plug 'milch/vim-fastlane'
   Plug 'jparise/vim-graphql'
+  Plug 'leafOfTree/vim-svelte-plugin'
 call plug#end()
 
 set encoding=UTF-8
@@ -43,6 +44,9 @@ let g:minimap_width = 18
 let g:minimap_git_colors = 1
 let g:minimap_highlight_search = 1
 " let g:minimap_highlight_range = 1
+
+" svelte syntax highlighting
+let g:vim_svelte_plugin_load_full_syntax = 1
 
 " alacritty specific gruvbox settings
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
