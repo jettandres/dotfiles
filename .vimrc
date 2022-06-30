@@ -19,7 +19,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-ruby/vim-ruby'
   Plug 'milch/vim-fastlane'
   Plug 'jparise/vim-graphql'
-  Plug 'leafOfTree/vim-svelte-plugin'
+  Plug 'evanleck/vim-svelte'
 call plug#end()
 
 set encoding=UTF-8
