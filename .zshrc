@@ -77,8 +77,6 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR="/usr/local/bin/vim"
 export VISUAL="/usr/local/bin/vim"
 
-export NVM_DIR="$HOME/.nvm"
-
 #export ANDROID_HOME=/Users/jett/Library/Android/sdk/
 #export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:~/Library/Python/2.7/bin:/usr/local/bin/aws_completer:$PATH
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -91,6 +89,8 @@ export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home/
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+export NVM_DIR="$HOME/.nvm"
 
 # User configuration
 FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=jflx-xwlj-bcdz-pduf
