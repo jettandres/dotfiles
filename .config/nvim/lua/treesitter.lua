@@ -13,3 +13,9 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+require('treesitter-context').setup {
+  enable = true,
+  max_lines = 1,
+  mode = 'cursor',
+}
