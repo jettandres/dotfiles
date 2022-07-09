@@ -21,3 +21,7 @@ bo.smartindent=true
 
 -- global-editor options
 g.matchup_matchparen_offscreen = { method = "status" }
+
+-- theme settings
+g.tokyonight_style = "night"
+vim.cmd[[colorscheme tokyonight]]
