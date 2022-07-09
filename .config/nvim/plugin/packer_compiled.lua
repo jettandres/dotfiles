@@ -83,6 +83,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
+  },
+  ["vim-matchup"] = {
+    loaded = true,
+    path = "/Users/jett/.local/share/nvim/site/pack/packer/start/vim-matchup",
+    url = "https://github.com/andymass/vim-matchup"
   }
 }
 

@@ -16,6 +16,7 @@ return packer.startup(function()
        run = ':TSUpdate',
    }
    use 'nvim-treesitter/nvim-treesitter-context'
+   use 'andymass/vim-matchup'
 
   -- Automatically set up config after cloning packer.nvim
   if packer_bootstrap then

@@ -12,6 +12,9 @@ require('nvim-treesitter.configs').setup {
       scope_incremental = "vc",
     },
   },
+  matchup = {
+    enable = true
+  },
 }
 
 require('treesitter-context').setup {
