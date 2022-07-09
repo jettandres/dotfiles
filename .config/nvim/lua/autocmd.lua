@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd({'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter'}, { 
+vim.api.nvim_create_autocmd({'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter'}, {
    group = vim.api.nvim_create_augroup('treesitter_fold_workaround', {}),
    callback = function()
       vim.opt.foldmethod = 'expr'
