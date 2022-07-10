@@ -84,11 +84,6 @@ _G.packer_plugins = {
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["lspsaga.nvim"] = {
-    loaded = true,
-    path = "/Users/jett/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
-    url = "https://github.com/glepnir/lspsaga.nvim"
-  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/lualine.nvim",
