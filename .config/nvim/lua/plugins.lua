@@ -30,6 +30,8 @@ return packer.startup(function()
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip'
 	use "williamboman/nvim-lsp-installer"
+	use('jose-elias-alvarez/null-ls.nvim')
+	use('MunifTanjim/prettier.nvim')
 
 	-- git
 	use 'mhinz/vim-signify'
