@@ -7,6 +7,7 @@ local g = vim.g
 o.splitbelow = true
 o.ignorecase = true
 o.smartcase = true
+o.updatetime = 100
 
 -- window-local options
 wo.number = true
@@ -17,11 +18,11 @@ wo.signcolumn = "yes"
 bo.expandtab = true
 bo.shiftwidth = 2
 bo.autoindent = true
-bo.smartindent=true
+bo.smartindent = true
 
 -- global-editor options
 g.matchup_matchparen_offscreen = { method = "status" }
 
 -- theme settings
 g.tokyonight_style = "night"
-vim.cmd[[colorscheme tokyonight]]
+vim.cmd [[colorscheme tokyonight]]

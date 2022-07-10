@@ -27,6 +27,10 @@ return packer.startup(function()
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
 
+  -- git
+  use 'mhinz/vim-signify'
+  use 'tpope/vim-fugitive'
+
   -- theme
   use 'folke/tokyonight.nvim'
 

@@ -124,10 +124,20 @@ _G.packer_plugins = {
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
   },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/Users/jett/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
   ["vim-matchup"] = {
     loaded = true,
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/vim-matchup",
     url = "https://github.com/andymass/vim-matchup"
+  },
+  ["vim-signify"] = {
+    loaded = true,
+    path = "/Users/jett/.local/share/nvim/site/pack/packer/start/vim-signify",
+    url = "https://github.com/mhinz/vim-signify"
   }
 }
 
