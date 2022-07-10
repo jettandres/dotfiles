@@ -42,7 +42,16 @@ return packer.startup(function()
 	use {
 		'nvim-telescope/telescope.nvim',
 		config = function()
-			require('telescope').setup {}
+			require('telescope').setup {
+				defaults = {
+					mappings = {
+						i = {
+							['<C-j>'] = 'move_selection_next',
+							['<C-k>'] = 'move_selection_previous',
+						},
+					},
+				},
+			}
 			require('telescope').load_extension('fzf')
 		end,
 		requires = { { 'nvim-lua/plenary.nvim' } }
