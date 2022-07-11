@@ -11,11 +11,3 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 	pattern = 'plugins.lua',
 	command = 'source <afile> | PackerSync'
 })
-
-vim.api.nvim_create_autocmd('BufWritePre', {
-	group = vim.api.nvim_create_augroup('format_on_save', {}),
-	pattern = { '*.lua', '*.go' },
-	callback = function()
-		--vim.lsp.buf.formatting_sync()
-	end
-})

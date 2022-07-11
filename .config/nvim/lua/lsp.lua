@@ -64,6 +64,7 @@ local on_attach = function(client, bufnr)
     -- Enable format on save capabilities
     client.server_capabilities.documentFormattingProvider = true
   end
+
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -88,7 +89,13 @@ local on_attach = function(client, bufnr)
 
   if client.resolved_capabilities.document_formatting then
     -- format on save
-    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = vim.api.nvim_create_augroup('format_on_save', {}),
+      pattern = '*',
+      callback = function()
+        vim.lsp.buf.formatting_sync()
+      end
+    })
   end
 end
 
@@ -115,33 +122,14 @@ for _, server in ipairs(lsp_installer.get_installed_servers()) do
   }
 end
 
--- null-ls for prettier
 local null_ls = require('null-ls')
---local prettier = require('prettier')
 
 null_ls.setup {
   on_attach = on_attach,
+  capabilities = capabilities,
   sources = {
     null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.formatting.prettierd
   },
 }
-
---prettier.setup {
---  bin = 'prettier',
---  filetypes = {
---    "css",
---    "graphql",
---    "html",
---    "javascript",
---    "javascriptreact",
---    "json",
---    "less",
---    "markdown",
---    "scss",
---    "typescript",
---    "typescriptreact",
---    "yaml",
---  },
---}
