@@ -29,7 +29,6 @@ return packer.startup(function()
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip'
-
 	use "williamboman/nvim-lsp-installer"
 	use('jose-elias-alvarez/null-ls.nvim')
 
@@ -58,6 +57,15 @@ return packer.startup(function()
 			require('telescope').load_extension('fzf')
 		end,
 		requires = { { 'nvim-lua/plenary.nvim' } }
+	}
+
+	-- nvim-tree
+	use {
+		'kyazdani42/nvim-tree.lua',
+		requires = {
+			'kyazdani42/nvim-web-devicons',
+		},
+		tag = 'nightly'
 	}
 
 	-- theme
