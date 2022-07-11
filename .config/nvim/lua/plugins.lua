@@ -24,9 +24,15 @@ return packer.startup(function()
   -- enhancements
   use 'andymass/vim-matchup'
   use {
-    "windwp/nvim-autopairs",
+    'windwp/nvim-autopairs',
     config = function()
       require("nvim-autopairs").setup()
+    end
+  }
+  use {
+    'windwp/nvim-ts-autotag',
+    config = function()
+      require('nvim-ts-autotag').setup()
     end
   }
 
