@@ -65,7 +65,10 @@ return packer.startup(function()
 		requires = {
 			'kyazdani42/nvim-web-devicons',
 		},
-		tag = 'nightly'
+		tag = 'nightly',
+		config = function()
+			require('nvim-tree').setup()
+		end
 	}
 
 	-- theme
