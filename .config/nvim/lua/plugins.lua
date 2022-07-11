@@ -32,7 +32,6 @@ return packer.startup(function()
 
 	use "williamboman/nvim-lsp-installer"
 	use('jose-elias-alvarez/null-ls.nvim')
-	use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
 	-- git
 	use 'mhinz/vim-signify'
