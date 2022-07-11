@@ -75,7 +75,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
   vim.keymap.set('n', '[e', vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set('n', ']e', vim.diagnostic.goto_next, bufopts)
-  vim.keymap.set('n', '<leader>E', vim.diagnostic.setloclist, bufopts)
+  vim.keymap.set('n', '<leader>E', '<cmd>Trouble document_diagnostics<cr>', bufopts)
 
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
