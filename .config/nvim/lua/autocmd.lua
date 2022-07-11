@@ -16,6 +16,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 	group = vim.api.nvim_create_augroup('format_on_save', {}),
 	pattern = { '*.lua', '*.go' },
 	callback = function()
-		vim.lsp.buf.formatting_sync()
+		--vim.lsp.buf.formatting_sync()
 	end
 })

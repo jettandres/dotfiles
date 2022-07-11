@@ -29,9 +29,11 @@ return packer.startup(function()
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip'
+
 	use "williamboman/nvim-lsp-installer"
 	use('jose-elias-alvarez/null-ls.nvim')
 	use('MunifTanjim/prettier.nvim')
+	use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
 	-- git
 	use 'mhinz/vim-signify'

@@ -56,6 +56,10 @@ local on_attach = function(client, bufnr)
   if client.name == 'tsserver' then
     client.resolved_capabilities.document_formatting = false
     client.resolved_capabilities.document_range_formatting = false
+
+    local ts_utils = require("nvim-lsp-ts-utils")
+    ts_utils.setup({})
+    ts_utils.setup_client(client)
   else
     -- Enable format on save capabilities
     client.server_capabilities.documentFormattingProvider = true
@@ -83,15 +87,9 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>ac', vim.lsp.buf.code_action, bufopts)
 
   if client.resolved_capabilities.document_formatting then
-    vim.cmd("nnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.formatting()<CR>")
     -- format on save
-    vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
   end
-
-  if client.resolved_capabilities.document_range_formatting then
-    vim.cmd("xnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.range_formatting({})<CR>")
-  end
-
 end
 
 for _, server in ipairs(lsp_installer.get_installed_servers()) do
@@ -119,26 +117,31 @@ end
 
 -- null-ls for prettier
 local null_ls = require('null-ls')
-local prettier = require('prettier')
+--local prettier = require('prettier')
 
 null_ls.setup {
-  on_attach = on_attach
-}
-
-prettier.setup {
-  bin = 'prettierd',
-  filetypes = {
-    "css",
-    "graphql",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "less",
-    "markdown",
-    "scss",
-    "typescript",
-    "typescriptreact",
-    "yaml",
+  on_attach = on_attach,
+  sources = {
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.formatting.prettierd
   },
 }
+
+--prettier.setup {
+--  bin = 'prettier',
+--  filetypes = {
+--    "css",
+--    "graphql",
+--    "html",
+--    "javascript",
+--    "javascriptreact",
+--    "json",
+--    "less",
+--    "markdown",
+--    "scss",
+--    "typescript",
+--    "typescriptreact",
+--    "yaml",
+--  },
+--}

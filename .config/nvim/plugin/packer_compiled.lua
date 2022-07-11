@@ -104,6 +104,11 @@ _G.packer_plugins = {
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
     url = "https://github.com/williamboman/nvim-lsp-installer"
   },
+  ["nvim-lsp-ts-utils"] = {
+    loaded = true,
+    path = "/Users/jett/.local/share/nvim/site/pack/packer/start/nvim-lsp-ts-utils",
+    url = "https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -145,7 +150,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
   ["telescope.nvim"] = {
-    config = { "\27LJ\2\n÷\1\0\0\6\0\f\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\2B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\n\0'\2\v\0B\0\2\1K\0\1\0\bfzf\19load_extension\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\2\n<C-k>\28move_selection_previous\n<C-j>\24move_selection_next\nsetup\14telescope\frequire\0" },
+    config = { "\27LJ\2\n÷\1\0\0\6\0\f\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\2B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\n\0'\2\v\0B\0\2\1K\0\1\0\bfzf\19load_extension\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\2\n<C-j>\24move_selection_next\n<C-k>\28move_selection_previous\nsetup\14telescope\frequire\0" },
     loaded = true,
     path = "/Users/jett/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
@@ -175,7 +180,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\n÷\1\0\0\6\0\f\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\2B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\n\0'\2\v\0B\0\2\1K\0\1\0\bfzf\19load_extension\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\2\n<C-k>\28move_selection_previous\n<C-j>\24move_selection_next\nsetup\14telescope\frequire\0", "config", "telescope.nvim")
+try_loadstring("\27LJ\2\n÷\1\0\0\6\0\f\0\0196\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\b\0005\3\6\0005\4\4\0005\5\3\0=\5\5\4=\4\a\3=\3\t\2B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\n\0'\2\v\0B\0\2\1K\0\1\0\bfzf\19load_extension\rdefaults\1\0\0\rmappings\1\0\0\6i\1\0\0\1\0\2\n<C-j>\24move_selection_next\n<C-k>\28move_selection_previous\nsetup\14telescope\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
 if should_profile then save_profiles() end
 
