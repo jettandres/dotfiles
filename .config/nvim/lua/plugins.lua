@@ -7,81 +7,88 @@ local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 local packer_bootstrap
 if fn.empty(fn.glob(install_path)) > 0 then
-	packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
-		install_path })
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
 end
 
 return packer.startup(function()
-	use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
 
-	-- treesitter
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate',
-	}
-	use 'nvim-treesitter/nvim-treesitter-context'
+  -- treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+  }
+  use 'nvim-treesitter/nvim-treesitter-context'
 
-	use 'andymass/vim-matchup'
+  -- enhancements
+  use 'andymass/vim-matchup'
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup()
+    end
+  }
 
-	-- lsp setup
-	use 'neovim/nvim-lspconfig'
-	use 'hrsh7th/nvim-cmp'
-	use 'hrsh7th/cmp-nvim-lsp'
-	use 'saadparwaiz1/cmp_luasnip'
-	use 'L3MON4D3/LuaSnip'
-	use "williamboman/nvim-lsp-installer"
-	use('jose-elias-alvarez/null-ls.nvim')
+  -- lsp setup
+  use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'L3MON4D3/LuaSnip'
+  use "williamboman/nvim-lsp-installer"
+  use('jose-elias-alvarez/null-ls.nvim')
 
-	-- git
-	use 'mhinz/vim-signify'
-	use 'tpope/vim-fugitive'
+  -- git
+  use 'mhinz/vim-signify'
+  use 'tpope/vim-fugitive'
 
-	-- telescope
-	use 'nvim-lua/plenary.nvim'
-	use 'kyazdani42/nvim-web-devicons'
-	use { 'nvim-telescope/telescope-fzf-native.nvim',
-		run = 'make' }
-	use {
-		'nvim-telescope/telescope.nvim',
-		config = function()
-			require('telescope').setup {
-				defaults = {
-					mappings = {
-						i = {
-							['<C-j>'] = 'move_selection_next',
-							['<C-k>'] = 'move_selection_previous',
-						},
-					},
-				},
-			}
-			require('telescope').load_extension('fzf')
-		end,
-		requires = { { 'nvim-lua/plenary.nvim' } }
-	}
+  -- telescope
+  use 'nvim-lua/plenary.nvim'
+  use 'kyazdani42/nvim-web-devicons'
+  use { 'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make' }
+  use {
+    'nvim-telescope/telescope.nvim',
+    config = function()
+      require('telescope').setup {
+        defaults = {
+          mappings = {
+            i = {
+              ['<C-j>'] = 'move_selection_next',
+              ['<C-k>'] = 'move_selection_previous',
+            },
+          },
+        },
+      }
+      require('telescope').load_extension('fzf')
+    end,
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
 
-	-- nvim-tree
-	use {
-		'kyazdani42/nvim-tree.lua',
-		requires = {
-			'kyazdani42/nvim-web-devicons',
-		},
-		tag = 'nightly',
-		config = function()
-			require('nvim-tree').setup()
-		end
-	}
+  -- nvim-tree
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons',
+    },
+    tag = 'nightly',
+    config = function()
+      require('nvim-tree').setup()
+    end
+  }
 
-	-- theme
-	use 'folke/tokyonight.nvim'
+  -- theme
+  use 'folke/tokyonight.nvim'
 
-	-- lualine
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-	}
+  -- lualine
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
-	-- Automatically set up config after cloning packer.nvim
-	if packer_bootstrap then
-		packer.sync()
-	end
+  -- Automatically set up config after cloning packer.nvim
+  if packer_bootstrap then
+    packer.sync()
+  end
 end)
