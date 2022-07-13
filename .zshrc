@@ -74,8 +74,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # code -w
-export EDITOR="/usr/local/bin/vim"
-export VISUAL="/usr/local/bin/vim"
+export EDITOR="/usr/local/bin/nvim"
+export VISUAL="/usr/local/bin/nvim"
 
 #export ANDROID_HOME=/Users/jett/Library/Android/sdk/
 #export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:~/Library/Python/2.7/bin:/usr/local/bin/aws_completer:$PATH
