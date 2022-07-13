@@ -12,3 +12,6 @@ map('n', '<C-h>', '<cmd>Telescope help_tags<cr>', options)
 
 -- nvim tree mappings
 map('n', '<C-b>', '<cmd>NvimTreeFindFileToggle<cr>', options)
+
+-- vim-fugitive mappings
+map('n', '<leader>fc', '<cmd>Gvdiffsplit!<cr>', options)
