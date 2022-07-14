@@ -11,3 +11,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 	pattern = 'plugins.lua',
 	command = 'source <afile> | PackerSync'
 })
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+	group = vim.api.nvim_create_augroup('fastlane', {}),
+	pattern = 'Fastfile',
+	command = 'set ft=ruby'
+})
