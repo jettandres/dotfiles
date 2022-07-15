@@ -68,6 +68,7 @@ return packer.startup(function()
       require('nvim-tree').setup({
         filters = {
           dotfiles = false,
+          exclude = { '.env.*' }
         },
       })
     end
