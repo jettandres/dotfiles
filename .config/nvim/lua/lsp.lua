@@ -72,6 +72,12 @@ local on_attach = function(client, bufnr)
 
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
+  -- dap-go mappings
+  if client.name == 'gopls' then
+    local dapgo = require('dap-go')
+    vim.keymap.set('n', '<leader>td', dapgo.debug_test, bufopts)
+  end
+
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
   vim.keymap.set('n', '[e', vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set('n', ']e', vim.diagnostic.goto_next, bufopts)
