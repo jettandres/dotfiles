@@ -74,6 +74,15 @@ return packer.startup(function()
     end
   }
 
+  -- nvim-dap
+  use 'mfussenegger/nvim-dap'
+  use {
+    'leoluz/nvim-dap-go',
+    config = function()
+      require('dap-go').setup()
+    end
+  }
+
   -- enhancements
   use 'andymass/vim-matchup'
   use {
