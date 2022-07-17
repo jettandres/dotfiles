@@ -9,7 +9,14 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'Buf
 vim.api.nvim_create_autocmd('BufWritePost', {
 	group = vim.api.nvim_create_augroup('packer_nvim_auto_install_plugins', {}),
 	pattern = 'plugins.lua',
-	command = 'source <afile> | PackerSync'
+	callback = function()
+		vim.ui.input({ prompt = 'Install plugin updates? (y/n; default=n): ' }, function(input)
+			if input == 'y' then
+				vim.cmd('source <afile> | PackerSync')
+			end
+		end)
+	end
+	-- command = 'source <afile> | PackerSync'
 })
 
 vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
