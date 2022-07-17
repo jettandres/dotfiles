@@ -82,6 +82,12 @@ return packer.startup(function()
       require('dap-go').setup()
     end
   }
+  use { "rcarriga/nvim-dap-ui",
+    requires = { "mfussenegger/nvim-dap" },
+    config = function()
+      require('dapui').setup()
+    end
+  }
 
   -- enhancements
   use 'andymass/vim-matchup'
