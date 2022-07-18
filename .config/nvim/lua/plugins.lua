@@ -82,10 +82,35 @@ return packer.startup(function()
       require('dap-go').setup()
     end
   }
-  use { "rcarriga/nvim-dap-ui",
-    requires = { "mfussenegger/nvim-dap" },
+  use { 'rcarriga/nvim-dap-ui',
+    requires = { 'mfussenegger/nvim-dap' },
     config = function()
-      require('dapui').setup()
+      require('dapui').setup({
+        layouts = {
+          {
+            elements = {
+              { id = "scopes", size = 0.25 },
+              "breakpoints",
+              "stacks",
+              "watches",
+            },
+            size = 40,
+            position = "left",
+          },
+          {
+            elements = {
+              "repl",
+            },
+            size = 0.25,
+            position = "bottom",
+          },
+        },
+      })
+    end
+  }
+  use { 'theHamsta/nvim-dap-virtual-text',
+    config = function()
+      require('nvim-dap-virtual-text').setup()
     end
   }
 
