@@ -70,6 +70,8 @@ plugins=(
   docker
   docker-compose
   pass
+  zsh-syntax-highlighting
+  zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -77,8 +79,6 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
 
-#export ANDROID_HOME=/Users/jett/Library/Android/sdk/
-#export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:~/Library/Python/2.7/bin:/usr/local/bin/aws_completer:$PATH
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
