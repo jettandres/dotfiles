@@ -24,3 +24,6 @@ vim.keymap.set('n', '<leader>d4', dap.step_into, options)
 vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, options)
 vim.keymap.set('n', '<leader>dr', dap.repl.open, options)
 vim.keymap.set('n', '<leader>dl', dap.run_last, options)
+
+-- markdown-preview mappings
+vim.keymap.set('n', '<leader>md', '<cmd>MarkdownPreviewToggle<cr>', options)

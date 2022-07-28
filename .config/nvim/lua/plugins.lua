@@ -145,6 +145,12 @@ return packer.startup(function()
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
 
+  -- markdown-preview
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+
   -- Automatically set up config after cloning packer.nvim
   if packer_bootstrap then
     packer.sync()
