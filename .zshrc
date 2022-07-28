@@ -132,7 +132,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 fpath=($fpath "/Users/jett/.zfunctions")
 
-export BAT_THEME="gruvbox-dark"
+export BAT_THEME="base16-256"
 if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
 
 # stty erase "^?"
