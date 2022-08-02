@@ -156,3 +156,6 @@ timezsh() {
 gch() {
   git checkout $(git branch | fzf)
 }
+
+# export secret variables
+source /Users/jett/.dotfiles/secrets.sh
