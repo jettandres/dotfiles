@@ -24,6 +24,12 @@ vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   command = 'set ft=ruby'
 })
 
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('env', {}),
+  pattern = '.env.*',
+  command = 'set ft=sh'
+})
+
 -- nvim-dap-ui
 local dap, dapui = require('dap'), require('dapui')
 dap.listeners.after.event_initialized["dapui_config"] = function()
