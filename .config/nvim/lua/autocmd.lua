@@ -18,6 +18,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   end
 })
 
+-- custom file types
 vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('fastlane', {}),
   pattern = 'Fastfile',
