@@ -13,6 +13,7 @@ o.updatetime = 100
 wo.number = true
 wo.relativenumber = true
 wo.signcolumn = "yes"
+wo.cursorline = true
 
 -- buffer-local options
 bo.expandtab = true
