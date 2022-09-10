@@ -93,6 +93,8 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export NVM_DIR="$HOME/.nvm"
 export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
 
+export CC="/usr/bin/clang"
+
 # User configuration
 FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD=jflx-xwlj-bcdz-pduf
 
