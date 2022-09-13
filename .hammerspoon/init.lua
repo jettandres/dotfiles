@@ -1,11 +1,15 @@
 local hyper = { "cmd", "alt", "ctrl", "shift" }
 
-hs.hotkey.bind(hyper, "W", function()
-  hs.notify.new({ title = "Ola amigo", informativeText = "Hello World" }):send()
-end)
-
 hs.hotkey.bind(hyper, "R", function()
   hs.reload()
+end)
+
+hs.hotkey.bind(hyper, "1", function()
+  hs.execute("open https://bit.ly/BkyWebStatus")
+end)
+
+hs.hotkey.bind(hyper, "2", function()
+  hs.execute("open https://bit.ly/BkyWeb")
 end)
 
 hs.loadSpoon("SpoonInstall")
