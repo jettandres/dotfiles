@@ -133,6 +133,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Setup asdf
+. /usr/local/opt/asdf/libexec/asdf.sh
+
 fpath=($fpath "/Users/jett/.zfunctions")
 
 export BAT_THEME="base16-256"
