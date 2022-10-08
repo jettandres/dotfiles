@@ -61,7 +61,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local on_attach = function(client, bufnr)
   if client.name == 'tsserver' then
     client.server_capabilities.documentFormattingProvider = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentRangeFormattingProvider = false
   else
     -- Enable format on save capabilities
     client.server_capabilities.documentFormattingProvider = true
@@ -102,7 +102,7 @@ local on_attach = function(client, bufnr)
       group = vim.api.nvim_create_augroup('format_on_save', {}),
       pattern = '*',
       callback = function()
-        vim.lsp.buf.formatting_sync()
+        vim.lsp.buf.format()
       end
     })
   end
