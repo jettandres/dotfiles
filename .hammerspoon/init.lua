@@ -14,6 +14,8 @@ end)
 
 hs.loadSpoon("SpoonInstall")
 
+spoon.SpoonInstall:andUse("EmmyLua")
+
 spoon.SpoonInstall:andUse("WindowGrid",
   {
     config = { gridGeometries = { { "6x4" } } },

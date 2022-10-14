@@ -121,7 +121,10 @@ for _, server in ipairs(lsp_installer.get_installed_servers()) do
           globals = { 'vim' },
         },
         workspace = {
-          library = vim.api.nvim_get_runtime_file("", true)
+          library = {
+            vim.api.nvim_get_runtime_file("", true),
+            "/Users/jett/.hammerspoon/Spoons/EmmyLua.spoon/annotations"
+          }
         },
         telemetry = {
           enable = false,
