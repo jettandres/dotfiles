@@ -1,8 +1,11 @@
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'BufWinEnter' }, {
   group = vim.api.nvim_create_augroup('treesitter_fold_workaround', {}),
   callback = function()
-    vim.opt.foldmethod = 'expr'
-    vim.opt.foldexpr   = 'nvim_treesitter#foldexpr()'
+    local line = vim.api.nvim_buf_line_count(0)
+    if line > 100 then
+      vim.opt.foldmethod = 'expr'
+      vim.opt.foldexpr   = 'nvim_treesitter#foldexpr()'
+    end
   end
 })
 
