@@ -3,6 +3,8 @@ local dap = require('dap')
 local options = { noremap = true, silent = true }
 
 vim.keymap.set('n', '<C-n>', '<cmd>set hlsearch!<cr>', options)
+vim.keymap.set('n', 'j', 'gj', options)
+vim.keymap.set('n', 'k', 'gk', options)
 
 -- telescope mappings
 vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<cr>', options)
