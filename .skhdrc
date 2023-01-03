@@ -11,7 +11,7 @@ shift + alt - j : yabai -m window --swap south
 alt - z : yabai -m window --toggle zoom-fullscreen
 
 alt - space : yabai -m window --toggle split
-shift + alt - space : yabai -m window --toggle float
+shift + alt - space : yabai -m window --toggle float && yabai -m window --grid 6:4:1:1:2:4
 
 # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
 ctrl + cmd - m : yabai -m space --create && \
