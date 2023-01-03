@@ -19,3 +19,6 @@ yabai -m config active_window_opacity 1.0
 yabai -m config normal_window_opacity 0.9
 
 yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Installer$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Calendar$" manage=off
