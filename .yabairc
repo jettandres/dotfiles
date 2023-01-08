@@ -22,3 +22,5 @@ yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Installer$" manage=off
 yabai -m rule --add app="^Archive Utility$" manage=off
 yabai -m rule --add app="^Calendar$" manage=off
+yabai -m rule --add app="^Canon IJ Scan Utility Lite$" manage=off
+yabai -m rule --add app="^Preview$" manage=off
