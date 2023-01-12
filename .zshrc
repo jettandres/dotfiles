@@ -91,7 +91,7 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 export NVM_DIR="$HOME/.nvm"
-export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
+export SDKROOT=$(xcrun -sdk macosx --show-sdk-path) 
 
 export CC="/usr/bin/clang"
 
