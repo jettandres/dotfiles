@@ -24,3 +24,8 @@ yabai -m rule --add app="^Archive Utility$" manage=off
 yabai -m rule --add app="^Calendar$" manage=off
 yabai -m rule --add app="^Canon IJ Scan Utility Lite$" manage=off
 yabai -m rule --add app="^Preview$" manage=off
+yabai -m rule --add app="^Slack$" manage=off
+yabai -m rule --add app="Postman" manage=off
+yabai -m rule --add app="Insomnia" manage=off
+yabai -m rule --add app="Todoist" manage=off
+yabai -m rule --add app="Finder" manage=off
