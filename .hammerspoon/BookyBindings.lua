@@ -1,8 +1,8 @@
 bky = hs.hotkey.modal.new(hyper, "b")
 
 function bky:entered()
-  hs.notify.new({ title = "Booky Shortcuts",
-    informativeText = "1 - mktp standup notes \n2 - mktp standup call \n3 - mktp jira web \n4 - mktp jira app"
+  hs.notify.new({ title = "Booky Pull Requests",
+    informativeText = "1 - OP\n2 - CMS\n3 - MA"
   }):send()
 end
 
@@ -15,21 +15,16 @@ bky:bind("", "escape", function()
 end)
 
 bky:bind("", "1", function()
-  hs.execute("open https://bit.ly/BkyWebStatus")
+  hs.execute("open https://github.com/scrambledeggs/booky-merchant/pulls")
   bky:exit()
 end)
 
 bky:bind("", "2", function()
-  hs.execute("open https://bit.ly/BkyWeb")
+  hs.execute("open https://github.com/scrambledeggs/booky-merchant-dash/pulls")
   bky:exit()
 end)
 
 bky:bind("", "3", function()
-  hs.execute("open https://bit.ly/3CTksMK")
-  bky:exit()
-end)
-
-bky:bind("", "4", function()
-  hs.execute("open https://bit.ly/3yEIYhU")
+  hs.execute("open https://github.com/scrambledeggs/booky-merchant-app/pulls")
   bky:exit()
 end)
