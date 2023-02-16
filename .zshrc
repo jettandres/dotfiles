@@ -165,3 +165,5 @@ gch() {
 
 # export secret variables
 source /Users/jett/.dotfiles/secrets.sh
+
+source /Users/jett/.docker/init-zsh.sh || true # Added by Docker Desktop
