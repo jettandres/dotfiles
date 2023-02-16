@@ -1,6 +1,8 @@
 -- Manage lsp servers with nvim-lsp-installer
-local lsp_installer = require('nvim-lsp-installer')
+local lsp_installer = require('mason')
+local mason_lspconfig = require('mason-lspconfig')
 lsp_installer.setup {}
+mason_lspconfig.setup()
 
 -- Auto-complete setup with luasnip and nvim-cmp
 local luasnip = require('luasnip')
@@ -108,10 +110,15 @@ local on_attach = function(client, bufnr)
   end
 end
 
-for _, server in ipairs(lsp_installer.get_installed_servers()) do
-  lspconfig[server.name].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
+mason_lspconfig.setup_handlers({
+  function (server_name)
+    lspconfig[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+  ["lua_ls"] = function ()
+    lspconfig.lua_ls.setup {
     settings = {
       Lua = {
         runtime = {
@@ -131,8 +138,9 @@ for _, server in ipairs(lsp_installer.get_installed_servers()) do
         },
       },
     },
-  }
-end
+    }
+  end
+})
 
 local null_ls = require('null-ls')
 
