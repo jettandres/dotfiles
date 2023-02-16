@@ -29,3 +29,6 @@ vim.keymap.set('n', '<leader>dl', dap.run_last, options)
 
 -- markdown-preview mappings
 vim.keymap.set('n', '<leader>md', '<cmd>MarkdownPreviewToggle<cr>', options)
+
+-- treesitter syntax highlighting fix
+vim.keymap.set('n', '<leader>w', '<C-o><cmd>write | edit | TSBufEnable highlight<cr>', options)
