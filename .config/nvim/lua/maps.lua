@@ -9,8 +9,10 @@ vim.keymap.set('n', 'k', 'gk', options)
 -- telescope mappings
 vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<cr>', options)
 vim.keymap.set('n', '<C-f>', '<cmd>Telescope live_grep<cr>', options)
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope current_buffer_fuzzy_find<cr>', options)
 vim.keymap.set('n', '<leader>p', '<cmd>Telescope buffers<cr>', options)
 vim.keymap.set('n', '<C-h>', '<cmd>Telescope help_tags<cr>', options)
+vim.keymap.set('n', '<leader><esc>', '<cmd>Telescope keymaps<cr>', options)
 
 -- nvim tree mappings
 vim.keymap.set('n', '<C-b>', '<cmd>NvimTreeFindFileToggle<cr>', options)
