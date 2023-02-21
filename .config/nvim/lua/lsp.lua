@@ -4,6 +4,9 @@ local mason_lspconfig = require('mason-lspconfig')
 lsp_installer.setup {}
 mason_lspconfig.setup()
 
+-- Setup lsp loading status
+require('fidget').setup()
+
 -- Auto-complete setup with luasnip and nvim-cmp
 local luasnip = require('luasnip')
 local cmp = require('cmp')

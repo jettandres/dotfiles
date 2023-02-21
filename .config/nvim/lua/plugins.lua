@@ -27,9 +27,10 @@ return packer.startup(function()
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip'
-	use "williamboman/mason.nvim"
-	use "williamboman/mason-lspconfig.nvim"
-	use('jose-elias-alvarez/null-ls.nvim')
+	use 'williamboman/mason.nvim'
+	use 'williamboman/mason-lspconfig.nvim'
+	use 'jose-elias-alvarez/null-ls.nvim'
+        use 'j-hui/fidget.nvim'
 
 	-- git
 	use 'mhinz/vim-signify'
