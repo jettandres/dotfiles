@@ -140,7 +140,7 @@ local function filter(arr, fn)
 end
 
 local function filterReactDTS(value)
-  return string.match(value.uri, 'react/index.d.ts') == nil
+    return string.match(value.targetUri, 'react/index.d.ts') == nil
 end
 
 mason_lspconfig.setup_handlers({
@@ -181,6 +181,7 @@ mason_lspconfig.setup_handlers({
             local filtered_result = filter(result, filterReactDTS)
             return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
           end
+
           vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
         end
       }
