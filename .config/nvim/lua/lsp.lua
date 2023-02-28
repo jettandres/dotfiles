@@ -80,8 +80,18 @@ local on_attach = function(client, bufnr)
   -- dap-go mappings
   if client.name == 'gopls' then
     local dapgo = require('dap-go')
+    local dap = require('dap')
+
     vim.keymap.set('n', '<leader>td', dapgo.debug_test, bufopts)
     vim.keymap.set('n', '<leader>tt', '<cmd>!go test<cr>', bufopts)
+
+    vim.keymap.set('n', '<F1>', dap.step_out, bufopts)
+    vim.keymap.set('n', '<F2>', dap.continue, bufopts)
+    vim.keymap.set('n', '<F3>', dap.step_over, bufopts)
+    vim.keymap.set('n', '<F4>', dap.step_into, bufopts)
+    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, bufopts)
+    vim.keymap.set('n', '<F7>', dap.repl.open, bufopts)
+    vim.keymap.set('n', '<F8>', dap.run_last, bufopts)
   end
 
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
@@ -107,7 +117,7 @@ local on_attach = function(client, bufnr)
       group = vim.api.nvim_create_augroup('format_on_save', {}),
       pattern = '*',
       callback = function()
-        vim.lsp.buf.format()
+        --vim.lsp.buf.format()
       end
     })
   end
