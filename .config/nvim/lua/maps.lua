@@ -12,6 +12,10 @@ vim.keymap.set('n', '<leader>p', '<cmd>Telescope buffers<cr>', options)
 vim.keymap.set('n', '<C-h>', '<cmd>Telescope help_tags<cr>', options)
 vim.keymap.set('n', '<leader><esc>', '<cmd>Telescope keymaps<cr>', options)
 
+-- quickfix mappings
+vim.keymap.set('n', '<M-k>', '<cmd>cprev<cr>', options)
+vim.keymap.set('n', '<M-j>', '<cmd>cnext<cr>', options)
+
 -- nvim tree mappings
 vim.keymap.set('n', '<C-b>', '<cmd>NvimTreeFindFileToggle<cr>', options)
 

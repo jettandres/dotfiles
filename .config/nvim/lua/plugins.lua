@@ -51,6 +51,9 @@ return packer.startup(function()
               ['<C-j>'] = 'move_selection_next',
               ['<C-k>'] = 'move_selection_previous',
             },
+            n = {
+              ['<leader>fd'] = 'send_selected_to_qflist',
+            }
           },
         },
       }
