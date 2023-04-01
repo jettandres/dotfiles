@@ -21,6 +21,8 @@ vim.keymap.set('n', '<C-b>', '<cmd>NvimTreeFindFileToggle<cr>', options)
 
 -- vim-fugitive mappings
 vim.keymap.set('n', '<leader>fc', '<cmd>Gvdiffsplit!<cr>', options)
+vim.keymap.set('n', 'gh', '<cmd>diffget //2<cr>', options)
+vim.keymap.set('n', 'gl', '<cmd>diffget //3<cr>', options)
 
 -- markdown-preview mappings
 vim.keymap.set('n', '<leader>md', '<cmd>MarkdownPreviewToggle<cr>', options)
