@@ -84,6 +84,7 @@ local on_attach = function(client, bufnr)
 
     vim.keymap.set('n', '<leader>td', dapgo.debug_test, bufopts)
     vim.keymap.set('n', '<leader>tt', '<cmd>!go test<cr>', bufopts)
+    vim.keymap.set('n', '<leader>tr', '<cmd>!go run .<cr>', bufopts)
 
     vim.keymap.set('n', '<F1>', dap.step_out, bufopts)
     vim.keymap.set('n', '<F2>', dap.continue, bufopts)
