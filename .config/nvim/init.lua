@@ -1,7 +1,12 @@
-require('settings')
+require('impatient')
 require('maps')
 require('plugins')
+
+-- clean
 require('autocmd')
 require('treesitter')
-require('lsp')
 require('statusline')
+
+-- possible slow
+require('lsp')
+require('settings')
