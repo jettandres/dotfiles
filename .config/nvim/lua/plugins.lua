@@ -14,6 +14,10 @@ end
 return packer.startup(function()
   use 'wbthomason/packer.nvim'
 
+  -- performance benchmarking / improvements
+  use 'dstein64/vim-startuptime'
+  use 'lewis6991/impatient.nvim'
+
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
