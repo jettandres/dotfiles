@@ -30,3 +30,7 @@ yabai -m rule --add app="Insomnia" manage=off
 yabai -m rule --add app="Todoist" manage=off
 yabai -m rule --add app="Finder" manage=off
 yabai -m rule --add app="OpenVPN*" manage=off
+
+yabai -m rule --add app="qemu*" manage=off
+yabai -m rule --add app="Android Emulator*" manage=off
+yabai -m rule --add app="Flipper*" manage=off
