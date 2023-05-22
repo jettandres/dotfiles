@@ -43,8 +43,6 @@ return packer.startup(function()
   -- telescope
   use 'nvim-lua/plenary.nvim'
   use 'kyazdani42/nvim-web-devicons'
-  use { 'nvim-telescope/telescope-fzf-native.nvim',
-  run = 'make' }
   use {
     'nvim-telescope/telescope.nvim',
     config = function()
@@ -65,6 +63,7 @@ return packer.startup(function()
     end,
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
   -- nvim-tree
   use {
