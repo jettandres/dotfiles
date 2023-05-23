@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/jett/.oh-my-zsh"
+export ZSH=$HOME
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -79,14 +79,19 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR="/usr/local/bin/nvim"
 export VISUAL="/usr/local/bin/nvim"
 
-export ANDROID_HOME=$HOME/Library/Android/sdk
+export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
-export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home/
 
-export GOROOT=/usr/local/opt/go/libexec
+# Ubuntu
+export JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+# OSX
+#export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home/
+
+
+export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
@@ -168,3 +173,12 @@ source /Users/jett/.dotfiles/secrets.sh
 
 source /Users/jett/.docker/init-zsh.sh || true # Added by Docker Desktop
 export PATH=$PATH:$HOME/.maestro/bin
+
+# fdfind fix (ubuntu linux)
+export PATH=$HOME/.local/bin:$PATH
+
+# thefuck cli
+eval $(thefuck --alias)
+
+# adsf (ubuntu linux)
+. "$HOME/.asdf/asdf.sh"
