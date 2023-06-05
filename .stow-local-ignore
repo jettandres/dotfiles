@@ -1,3 +1,5 @@
 /themes
 .git
 secrets.sh
+.zshrc.osx.bak
+.tmux.conf.osx.bak
