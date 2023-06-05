@@ -1,2 +1,4 @@
 *.sw*
 secrets.sh
+pass-store
+zsh-syntax-highlighting
