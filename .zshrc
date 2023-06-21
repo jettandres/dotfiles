@@ -156,6 +156,13 @@ gch() {
   git checkout $(git branch | fzf)
 }
 
+ovpn() {
+  if [[ "$1" == "up" ]]; then
+    ~/codes/booky/scripts/vpn/connect.sh
+  elif [[ "$1" == "down" ]]; then
+    ~/codes/booky/scripts/vpn/disconnect.sh
+  fi
+}
 
 export PATH=$PATH:$HOME/.maestro/bin
 
