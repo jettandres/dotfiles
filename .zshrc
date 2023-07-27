@@ -147,7 +147,6 @@ export GPG_TTY=$(tty)
 # fzf auto-complete and key bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
 # Custom Methods
 timezsh() {
   shell=${1-$SHELL}
