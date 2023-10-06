@@ -1,15 +1,3 @@
-vim.api.nvim_create_autocmd('BufWritePost', {
-  group = vim.api.nvim_create_augroup('packer_nvim_auto_install_plugins', {}),
-  pattern = 'plugins.lua',
-  callback = function()
-    vim.ui.input({ prompt = 'Install plugin updates? (y/n; default=n): ' }, function(input)
-      if input == 'y' then
-        vim.cmd('source <afile> | PackerSync')
-      end
-    end)
-  end
-})
-
 -- custom file types
 vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('fastlane', {}),

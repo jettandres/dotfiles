@@ -27,4 +27,4 @@ g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 
 -- theme settings
-vim.cmd [[colorscheme tokyonight-storm]]
+--vim.cmd [[colorscheme tokyonight-storm]]
