@@ -125,6 +125,83 @@ local on_attach = function(client, bufnr)
   end
 end
 
+--- New in Neovim v0.9.2 [Pretty LSP floating Windows](https://dotfyle.com/this-week-in-neovim/54)
+--- LSP handler that adds extra inline highlights, keymaps, and window options.
+--- Code inspired from `noice`. copied and modified from github.com/MariaSolOs/dotfiles
+--- @param handler fun(err: any, result: any, ctx: any, config: any): integer, integer
+--- @return function
+local md_namespace = vim.api.nvim_create_namespace 'jettandres/lsp_float'
+local function enhanced_float_handler(handler)
+  return function(err, result, ctx, config)
+    local buf, win = handler(
+      err,
+      result,
+      ctx,
+      vim.tbl_deep_extend('force', config or {}, {
+        border = 'rounded',
+        max_height = math.floor(vim.o.lines * 0.5),
+        max_width = math.floor(vim.o.columns * 0.4),
+      })
+    )
+
+    if not buf or not win then
+      return
+    end
+
+    -- Conceal everything.
+    vim.wo[win].concealcursor = 'n'
+
+    -- Extra highlights.
+    for l, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
+      for pattern, hl_group in pairs {
+        ['|%S-|'] = '@text.reference',
+        ['@%S+'] = '@parameter',
+        ['^%s*(Parameters:)'] = '@text.title',
+        ['^%s*(Return:)'] = '@text.title',
+        ['^%s*(See also:)'] = '@text.title',
+        ['{%S-}'] = '@parameter',
+      } do
+        local from = 1 ---@type integer?
+        while from do
+          local to
+          from, to = line:find(pattern, from)
+          if from then
+            vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, from - 1, {
+              end_col = to,
+              hl_group = hl_group,
+            })
+          end
+          from = to and to + 1 or nil
+        end
+      end
+    end
+
+    -- Add keymaps for opening links.
+    if not vim.b[buf].markdown_keys then
+      vim.keymap.set('n', 'K', function()
+        -- Vim help links.
+        local url = (vim.fn.expand '<cWORD>' --[[@as string]]):match '|(%S-)|'
+        if url then
+          return vim.cmd.help(url)
+        end
+
+        -- Markdown links.
+        local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+        local from, to
+        from, to, url = vim.api.nvim_get_current_line():find '%[.-%]%((%S-)%)'
+        local command = string.format("firefox %q", url)
+        if from and col >= from and col <= to then
+          vim.fn.system(command)
+        end
+      end, { buffer = buf, silent = true })
+      vim.b[buf].markdown_keys = true
+    end
+  end
+end
+
+vim.lsp.handlers['textDocument/hover'] = enhanced_float_handler(vim.lsp.handlers.hover)
+vim.lsp.handlers['textDocument/signatureHelp'] = enhanced_float_handler(vim.lsp.handlers.signature_help)
+
 -- util functions to filter node_modules during Go To Definition
 local function filter(arr, fn)
   if type(arr) ~= "table" then
@@ -142,40 +219,40 @@ local function filter(arr, fn)
 end
 
 local function filterReactDTS(value)
-    return string.match(value.targetUri, 'react/index.d.ts') == nil
+  return string.match(value.targetUri, 'react/index.d.ts') == nil
 end
 
 mason_lspconfig.setup_handlers({
-  function (server_name)
+  function(server_name)
     lspconfig[server_name].setup {
       on_attach = on_attach,
       capabilities = capabilities,
     }
   end,
-  ["lua_ls"] = function ()
+  ["lua_ls"] = function()
     lspconfig.lua_ls.setup {
-    settings = {
-      Lua = {
-        runtime = {
-          version = 'LuaJIT',
-        },
-        diagnostics = {
-          globals = { 'vim' },
-        },
-        workspace = {
-          library = {
-            vim.api.nvim_get_runtime_file("", true),
-            "/Users/jett/.hammerspoon/Spoons/EmmyLua.spoon/annotations"
-          }
-        },
-        telemetry = {
-          enable = false,
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = { 'vim' },
+          },
+          workspace = {
+            library = {
+              vim.api.nvim_get_runtime_file("", true),
+              "/Users/jett/.hammerspoon/Spoons/EmmyLua.spoon/annotations"
+            }
+          },
+          telemetry = {
+            enable = false,
+          },
         },
       },
-    },
-  }
+    }
   end,
-  ["tsserver"] = function ()
+  ["tsserver"] = function()
     lspconfig.tsserver.setup {
       handlers = {
         ['textDocument/definition'] = function(err, result, method, ...)
