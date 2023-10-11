@@ -3,4 +3,9 @@ if status is-interactive
 end
 
 set -gx EDITOR nvim
+
+set -gx ANDROID_HOME $HOME/Android/Sdk
+fish_add_path $ANDROID_HOME/emulator
+fish_add_path $ANDROID_HOME/platform-tools
+
 source ~/.asdf/asdf.fish
