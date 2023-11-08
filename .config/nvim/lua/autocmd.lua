@@ -6,6 +6,24 @@ vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
 })
 
 vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('mp-sjs', {}),
+  pattern = '*.sjs',
+  command = 'set ft=javascript'
+})
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('mp-axml', {}),
+  pattern = '*.axml',
+  command = 'set ft=xml'
+})
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('mp-acss', {}),
+  pattern = '*.acss',
+  command = 'set ft=css'
+})
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('env', {}),
   pattern = '.env.*',
   command = 'set ft=sh'
