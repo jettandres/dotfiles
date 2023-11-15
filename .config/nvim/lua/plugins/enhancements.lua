@@ -17,10 +17,12 @@ return {
 		dependencies = { { "kyazdani42/nvim-web-devicons" } }
 	},
 	{
-		"iamcco/markdown-preview.nvim",
-		event = { "VeryLazy" },
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
+		  "iamcco/markdown-preview.nvim",
+		  cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		  build = "cd app && yarn install",
+		  init = function()
+			  vim.g.mkdp_filetypes = { "markdown" }
+		  end,
+		  ft = { "markdown" },
 	}
 }
