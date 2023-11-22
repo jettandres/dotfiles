@@ -12,6 +12,14 @@ local luasnip = require('luasnip')
 local cmp = require('cmp')
 
 cmp.setup {
+  window = {
+    completion = {
+	border = "rounded",
+    },
+    documentation = {
+        border = "rounded",
+    },
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
