@@ -7,3 +7,5 @@ if status is-login
        #exec sway
     end
 end
+
+source /opt/asdf-vm/asdf.fish
