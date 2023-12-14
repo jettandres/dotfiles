@@ -71,8 +71,8 @@ exec swayidle -w \
 #
 # Lenovo x230 Volume Buttons
 #
-  bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 10%+
-  bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-
+  bindsym XF86AudioRaiseVolume exec ~/.config/sway/scripts/controls/volume_up.sh
+  bindsym XF86AudioLowerVolume exec ~/.config/sway/scripts/controls/volume_down.sh
   bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
   bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
