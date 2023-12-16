@@ -73,7 +73,7 @@ exec swayidle -w \
 #
   bindsym XF86AudioRaiseVolume exec ~/.config/sway/scripts/controls/volume_up.sh
   bindsym XF86AudioLowerVolume exec ~/.config/sway/scripts/controls/volume_down.sh
-  bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+  bindsym XF86AudioMute exec ~/.config/sway/scripts/controls/volume_toggle_mute.sh
   bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 #
