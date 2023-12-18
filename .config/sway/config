@@ -79,9 +79,8 @@ exec swayidle -w \
 #
 # Control Brightness
 #
-  bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-  bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-
+  bindsym XF86MonBrightnessDown exec ~/.config/sway/scripts/controls/screen_brightness_down.sh
+  bindsym XF86MonBrightnessUp exec ~/.config/sway/scripts/controls/screen_brightness_up.sh
 #
 # Basics:
 #
