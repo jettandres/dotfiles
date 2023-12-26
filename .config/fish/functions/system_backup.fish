@@ -1,5 +1,5 @@
 function system_backup
   echo "initializing full system backup"
-  rsync -aAxHv -e ssh --filter "merge rsync_backup.filter" --numeric-ids / jettandres@192.168.254.102:/media/lenovo-x230/backups/$(date +%Y-%m-%d:_%T)/
+  sudo rsync -aAxv -e ssh --filter "merge rsync_backup.filter" --numeric-ids / jettandres@192.168.254.102:/media/lenovo-x230/backups/$(date +%Y-%m-%d:_%T)/
   echo "done!"
 end
