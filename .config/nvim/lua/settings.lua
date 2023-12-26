@@ -25,6 +25,3 @@ bo.smartindent = true
 g.matchup_matchparen_offscreen = { method = "status" }
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
-
--- theme settings
---vim.cmd [[colorscheme tokyonight-storm]]
