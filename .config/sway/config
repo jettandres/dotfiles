@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 
 xwayland enable
-font pango:"Terminess Nerd Font" Regular 10
+font "Terminess Nerd Font" Regular 9
 
 exec wluma
 exec foot -s
