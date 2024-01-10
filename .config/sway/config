@@ -82,6 +82,12 @@ exec swayidle -w \
   bindsym XF86MonBrightnessDown exec ~/.config/sway/scripts/controls/screen_brightness_down.sh
   bindsym XF86MonBrightnessUp exec ~/.config/sway/scripts/controls/screen_brightness_up.sh
 #
+
+#
+# Print screen
+#
+  bindsym Print exec grim - | waycopy -t "image/png"
+
 # Basics:
 #
     # Start a terminal
