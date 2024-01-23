@@ -3,3 +3,5 @@ background-color=#323232
 border-color=#e06666
 border-size=1
 border-radius=3
+
+default-timeout=5000
