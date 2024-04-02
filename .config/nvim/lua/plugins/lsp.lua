@@ -1,4 +1,4 @@
-return { 
+return {
   { 'neovim/nvim-lspconfig' },
   { 'hrsh7th/nvim-cmp' },
   { 'hrsh7th/cmp-nvim-lsp' },
@@ -15,7 +15,7 @@ return {
 
   { 'rcarriga/nvim-dap-ui',
   event = { "VeryLazy" },
-  dependencies = { 'mfussenegger/nvim-dap' },
+  dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
   config = function()
     require('dapui').setup({
       layouts = {
