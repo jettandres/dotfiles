@@ -1,0 +1,9 @@
+# Set to true to use lowercase keywords instead of uppercase.
+lowercaseKeywords: false
+connections:
+  - alias: local_docker_postgres
+    driver: postgresql
+    port: 5432
+    user: postgres
+    passwd: mysecretpassword
+    dataSourceName: postgres://postgres:mysecretpassword@172.17.0.2:5432/postgres
