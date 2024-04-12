@@ -29,6 +29,12 @@ vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   command = 'set ft=sh'
 })
 
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  group = vim.api.nvim_create_augroup('sql lsp', { clear = true }),
+  pattern = '*.sql',
+  command = '!sqlfluff lint % --dialect postgres'
+})
+
 -- nvim-dap-ui
 local dap, dapui = require('dap'), require('dapui')
 dap.listeners.after.event_initialized["dapui_config"] = function()
