@@ -80,6 +80,10 @@ local on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = true
   end
 
+  if client.name == 'sqls' then
+    require('sqls').on_attach(client, bufnr)
+  end
+
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -272,6 +276,11 @@ mason_lspconfig.setup_handlers({
           vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
         end
       }
+    }
+  end,
+  ["sqls"] = function ()
+    lspconfig.sqls.setup {
+      on_attach = on_attach
     }
   end
 })

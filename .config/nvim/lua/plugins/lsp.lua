@@ -8,6 +8,7 @@ return {
   { 'j-hui/fidget.nvim', branch = "legacy", event = { "VeryLazy" } },
   { 'williamboman/mason.nvim' },
   { 'williamboman/mason-lspconfig.nvim'},
+  { 'nanotee/sqls.nvim' },
 
   -- Golang Debugging
   { 'mfussenegger/nvim-dap', event = { "VeryLazy" } },
