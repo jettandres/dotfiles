@@ -28,6 +28,3 @@ g.loaded_netrwPlugin = 1
 
 -- theme settings
 --vim.cmd [[colorscheme tokyonight-storm]]
-
--- from kickstart.nvim
-vim.opt.inccommand = 'split'

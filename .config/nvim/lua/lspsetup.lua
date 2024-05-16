@@ -80,6 +80,10 @@ local on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = true
   end
 
+  if client.name == 'sqls' then
+    require('sqls').on_attach(client, bufnr)
+  end
+
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -99,7 +103,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<F3>', dap.step_over, bufopts)
     vim.keymap.set('n', '<F4>', dap.step_into, bufopts)
     vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, bufopts)
-    vim.keymap.set('n', '<F7>', dap.repl.open, bufopts)
+    vim.keymap.set('n', '<F8>', dap.repl.open, bufopts)
     vim.keymap.set('n', '<F8>', dap.run_last, bufopts)
   end
 
@@ -272,6 +276,11 @@ mason_lspconfig.setup_handlers({
           vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
         end
       }
+    }
+  end,
+  ["sqls"] = function ()
+    lspconfig.sqls.setup {
+      on_attach = on_attach
     }
   end
 })
