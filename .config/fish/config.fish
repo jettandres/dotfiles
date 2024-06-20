@@ -8,7 +8,9 @@ if status is-login
     end
 end
 
+# asdf
 source /opt/asdf-vm/asdf.fish
+source ~/.asdf/plugins/golang/set-env.fish
 
 set -x GOPATH $HOME/go
 set -x PATH $PATH $GOPATH/bin
