@@ -284,7 +284,9 @@ mason_lspconfig.setup_handlers({
     }
   end,
   ["vacuum"] = function ()
-    lspconfig.vacuum.setup{}
+    lspconfig.vacuum.setup{
+      on_attach = on_attach
+    }
   end
 })
 
