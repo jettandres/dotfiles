@@ -282,6 +282,9 @@ mason_lspconfig.setup_handlers({
     lspconfig.sqls.setup {
       on_attach = on_attach
     }
+  end,
+  ["vacuum"] = function ()
+    lspconfig.vacuum.setup{}
   end
 })
 
@@ -304,3 +307,12 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- vacuum
+vim.filetype.add {
+  pattern = {
+    ['openapi.*%.ya?ml'] = 'yaml.openapi',
+    ['openapi.*%.json'] = 'json.openapi',
+    ['api_contract.ya?ml'] = 'yaml.openapi'
+  },
+}
