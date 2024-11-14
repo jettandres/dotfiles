@@ -72,7 +72,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local on_attach = function(client, bufnr)
-  if client.name == 'tsserver' then
+  if client.name == 'ts_ls' then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
   else
@@ -103,7 +103,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<F3>', dap.step_over, bufopts)
     vim.keymap.set('n', '<F4>', dap.step_into, bufopts)
     vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, bufopts)
-    vim.keymap.set('n', '<F7>', dap.repl.open, bufopts)
+    vim.keymap.set('n', '<F8>', dap.repl.open, bufopts)
     vim.keymap.set('n', '<F8>', dap.run_last, bufopts)
   end
 
@@ -264,8 +264,8 @@ mason_lspconfig.setup_handlers({
       },
     }
   end,
-  ["tsserver"] = function()
-    lspconfig.tsserver.setup {
+  ["ts_ls"] = function()
+    lspconfig.ts_ls.setup {
       handlers = {
         ['textDocument/definition'] = function(err, result, method, ...)
           if vim.tbl_islist(result) and #result > 1 then
@@ -280,6 +280,11 @@ mason_lspconfig.setup_handlers({
   end,
   ["sqls"] = function ()
     lspconfig.sqls.setup {
+      on_attach = on_attach
+    }
+  end,
+  ["vacuum"] = function ()
+    lspconfig.vacuum.setup{
       on_attach = on_attach
     }
   end
@@ -304,3 +309,12 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- vacuum
+vim.filetype.add {
+  pattern = {
+    ['openapi.*%.ya?ml'] = 'yaml.openapi',
+    ['openapi.*%.json'] = 'json.openapi',
+    ['api_contract.ya?ml'] = 'yaml.openapi'
+  },
+}

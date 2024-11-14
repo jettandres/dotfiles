@@ -32,5 +32,8 @@ vim.keymap.set('n', 'gl', '<cmd>diffget //3<cr>', options)
 -- markdown-preview mappings
 vim.keymap.set('n', '<leader>md', '<cmd>MarkdownPreviewToggle<cr>', options)
 
+-- swagger-preview mappings
+vim.keymap.set('n', '<leader>sp', '<cmd>SwaggerPreviewToggle<cr>', options)
+
 -- treesitter syntax highlighting fix
 vim.keymap.set('n', '<leader>w', '<C-o><cmd>write | edit | TSBufEnable highlight<cr>', options)
