@@ -303,6 +303,16 @@ mason_lspconfig.setup_handlers({
 
 local null_ls = require('null-ls')
 
+--null_ls.setup {
+--  on_attach = on_attach,
+--  capabilities = capabilities,
+--  sources = {
+--    null_ls.builtins.diagnostics.eslint_d,
+--    null_ls.builtins.code_actions.eslint_d,
+--    null_ls.builtins.formatting.prettierd,
+--    null_ls.builtins.diagnostics.hadolint,
+--  },
+--}
 
 -- change diagnostic symbols in gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
