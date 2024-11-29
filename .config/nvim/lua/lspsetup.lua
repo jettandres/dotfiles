@@ -72,7 +72,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local on_attach = function(client, bufnr)
-  if client.name == 'tsserver' then
+  if client.name == 'ts_ls' then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
   else
@@ -83,6 +83,9 @@ local on_attach = function(client, bufnr)
   if client.name == 'sqls' then
     require('sqls').on_attach(client, bufnr)
   end
+
+  -- for future debugging with :messages
+  print(vim.inspect(client.server_capabilities))
 
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -129,7 +132,7 @@ local on_attach = function(client, bufnr)
     -- format on save
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = vim.api.nvim_create_augroup('format_on_save', {}),
-      pattern = {'*.go', '*.svelte'},
+      pattern = {'*.go', '*.svelte', '*.ts'},
       callback = function()
         vim.lsp.buf.format()
       end
@@ -275,7 +278,15 @@ mason_lspconfig.setup_handlers({
 
           vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
         end
-      }
+      },
+      root_dir = lspconfig.util.root_pattern('package.json'),
+      single_file_support = false
+    }
+  end,
+  ["denols"] = function ()
+    lspconfig.denols.setup {
+      on_attach = on_attach,
+      root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
     }
   end,
   ["sqls"] = function ()
@@ -292,16 +303,6 @@ mason_lspconfig.setup_handlers({
 
 local null_ls = require('null-ls')
 
-null_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  sources = {
-    null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.code_actions.eslint_d,
-    null_ls.builtins.formatting.prettierd,
-    null_ls.builtins.diagnostics.hadolint,
-  },
-}
 
 -- change diagnostic symbols in gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -317,4 +318,9 @@ vim.filetype.add {
     ['openapi.*%.json'] = 'json.openapi',
     ['api_contract.ya?ml'] = 'yaml.openapi'
   },
+}
+
+-- denols
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
 }
