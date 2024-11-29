@@ -264,8 +264,8 @@ mason_lspconfig.setup_handlers({
       },
     }
   end,
-  ["tsserver"] = function()
-    lspconfig.tsserver.setup {
+  ["ts_ls"] = function()
+    lspconfig.ts_ls.setup {
       handlers = {
         ['textDocument/definition'] = function(err, result, method, ...)
           if vim.tbl_islist(result) and #result > 1 then
