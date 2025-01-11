@@ -1,15 +1,3 @@
-vim.api.nvim_create_autocmd('BufWritePost', {
-  group = vim.api.nvim_create_augroup('packer_nvim_auto_install_plugins', {}),
-  pattern = 'plugins.lua',
-  callback = function()
-    vim.ui.input({ prompt = 'Install plugin updates? (y/n; default=n): ' }, function(input)
-      if input == 'y' then
-        vim.cmd('source <afile> | PackerSync')
-      end
-    end)
-  end
-})
-
 -- custom file types
 vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('fastlane', {}),
@@ -18,9 +6,33 @@ vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
 })
 
 vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('mp-sjs', {}),
+  pattern = '*.sjs',
+  command = 'set ft=javascript'
+})
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('mp-axml', {}),
+  pattern = '*.axml',
+  command = 'set ft=xml'
+})
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('mp-acss', {}),
+  pattern = '*.acss',
+  command = 'set ft=css'
+})
+
+vim.api.nvim_create_autocmd({ 'BufNew', 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('env', {}),
   pattern = '.env.*',
   command = 'set ft=sh'
+})
+
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  group = vim.api.nvim_create_augroup('sql lsp', { clear = true }),
+  pattern = '*.sql',
+  command = '!sqlfluff lint % --dialect postgres'
 })
 
 -- nvim-dap-ui

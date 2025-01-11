@@ -1,12 +1,25 @@
-require('impatient')
-require('maps')
-require('plugins')
+-- Install package manager
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
--- clean
-require('autocmd')
-require('treesitter')
-require('statusline')
+require("lazy").setup("plugins")
 
--- possible slow
-require('lsp')
-require('settings')
+-- General setup
+require("settings")
+require("maps")
+require("autocmd")
+
+require("lspsetup")
+
+-- Theme
+vim.cmd[[colorscheme tokyonight]]
