@@ -85,7 +85,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- for future debugging with :messages
-  print(vim.inspect(client.server_capabilities))
+  --print(vim.inspect(client.server_capabilities))
 
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -128,11 +128,13 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<leader>ac', vim.lsp.buf.code_action, bufopts)
 
+  vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format, bufopts)
+
   if client.server_capabilities.documentFormattingProvider then
     -- format on save
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = vim.api.nvim_create_augroup('format_on_save', {}),
-      pattern = {'*.go', '*.svelte', '*.ts'},
+      pattern = {'*.go', '*.svelte'},
       callback = function()
         vim.lsp.buf.format()
       end
@@ -303,16 +305,16 @@ mason_lspconfig.setup_handlers({
 
 local null_ls = require('null-ls')
 
---null_ls.setup {
---  on_attach = on_attach,
---  capabilities = capabilities,
---  sources = {
---    null_ls.builtins.diagnostics.eslint_d,
---    null_ls.builtins.code_actions.eslint_d,
---    null_ls.builtins.formatting.prettierd,
---    null_ls.builtins.diagnostics.hadolint,
---  },
---}
+null_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  sources = {
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.diagnostics.hadolint,
+  },
+}
 
 -- change diagnostic symbols in gutter
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
