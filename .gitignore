@@ -1,0 +1,2 @@
+# Ignore decrypted secret files just in case
+*.secret
