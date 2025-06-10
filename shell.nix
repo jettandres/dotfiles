@@ -10,8 +10,8 @@ pkgs.mkShellNoCC {
     lolcat
 
     # Essentials
-    fish
     git
+    fish
     neovim
     asdf
     tmux
@@ -24,6 +24,10 @@ pkgs.mkShellNoCC {
 
   shellHook = ''
     echo $GREETING | cowsay | lolcat
-    fish
+    # Only exec fish if not already inside fish
+    if [ -z "$IN_NIX_SHELL_FISH" ]; then
+      export IN_NIX_SHELL_FISH=1
+      exec fish
+    fi
   '';
 }
