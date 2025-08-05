@@ -2,8 +2,6 @@
 This repository contains my dotfiles and replicable dev environment setup across different machines using Nix and Chezmoi. Always a work-in-progress.
 
 # Prerequisites
-- [just](https://github.com/casey/just)
-    - for bootstrapping initial apps per OS
 - [nix-shell](https://github.com/NixOS/nix-shell)
     - for centralizing dev environment
 - [chezmoi](https://github.com/twpayne/chezmoi)
@@ -15,5 +13,9 @@ This repository contains my dotfiles and replicable dev environment setup across
 1. Install the prerequisites manually
 2. Clone this public repository using https method
 
-## Development
+# Setup with Chezmoi only
+1. Install [chezmoi](chezmoi.io)
+2. Run `chezmoi init --apply --verbose https://github.com/jettandres/dotfiles.git`
+
+# Setup with Nix only
 - Run nix anywhere and reference the config in this repo with `nix-shell ./nix-shell.nix`
