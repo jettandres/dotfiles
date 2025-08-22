@@ -1,13 +1,13 @@
 #!/bin/sh
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "cachyos")) }}
   # install yay
-  sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+  sudo pacman -S --needed --noconfirm git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
   # install from official arch repo
-  sudo pacman -S fish neovim tmux foot
+  sudo pacman -S --noconfirm fish neovim tmux foot
 
   # install AUR packages
-  yay -S asdf-vm
+  yay -S --noconfirm asdf-vm
 
 {{ else if eq .chezmoi.os "macos" }}
   # TODO: add macos install
