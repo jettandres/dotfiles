@@ -1,20 +1,20 @@
 #!/bin/sh
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "cachyos")) }}
-  # install fish
-
   # install yay
-  #sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+  sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
   # install from official arch repo
-  #sudo pacman -S fish neovim tmux foot
+  sudo pacman -S fish neovim tmux foot
 
   # install AUR packages
-  #yay -S asdf-vm
+  yay -S asdf-vm
 
 {{ else if eq .chezmoi.os "macos" }}
   # TODO: add macos install
 
 {{ end }}
+
+# FISH CONFIG
 
 # set fish as default shell
 echo /usr/local/bin/fish | sudo tee -a /etc/shells
@@ -25,3 +25,8 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 
 # install tide fish prompt via fisher
 fisher install IlanCosman/tide@v6
+
+# ASDF PLUGINS
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
+source (echo $ASDF_DATA_DIR | if test -z $it; echo $HOME/.asdf; else echo $it; end)/plugins/golang/set-env.fish
