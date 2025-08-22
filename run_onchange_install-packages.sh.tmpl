@@ -7,14 +7,12 @@
   sudo pacman -S --noconfirm fish neovim tmux foot
 
   # install AUR packages
-  yay -S --noconfirm asdf-vm
+  yes | yay -S asdf-vm
 
 {{ else if eq .chezmoi.os "macos" }}
   # TODO: add macos install
 
 {{ end }}
-
-# FISH CONFIG
 
 # install fisher package manager
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
