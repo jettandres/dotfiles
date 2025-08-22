@@ -1,0 +1,11 @@
+#!/bin/sh
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "cachyos")) }}
+  # install yay
+  # sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+  # install from official arch repo
+  sudo pacman -S tmux
+
+  # install AUR packages
+  # yay -S asdf-vm
+{{ end }}
