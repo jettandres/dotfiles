@@ -14,7 +14,7 @@ This repository contains my dotfiles and replicable dev environment setup across
 2. Clone this public repository using https method
 
 # Setup with Chezmoi only
-1. Install [chezmoi](chezmoi.io)
+1. Install [chezmoi](https://www.chezmoi.io)
 2. Run `chezmoi init --apply --verbose https://github.com/jettandres/dotfiles.git`
 
 # Setup with Nix only
