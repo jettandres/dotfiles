@@ -1,7 +1,10 @@
 #!/bin/sh
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "cachyos")) }}
   # install yay
-  sudo pacman -S --needed --noconfirm git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+  sudo pacman -S --needed --noconfirm git base-devel
+  git clone https://aur.archlinux.org/yay.git
+  cd yay
+  yes | makepkg -si
 
   # install from official arch repo
   sudo pacman -S --noconfirm fish neovim tmux foot
@@ -13,6 +16,8 @@
   # TODO: add macos install
 
 {{ end }}
+
+fish
 
 # install fisher package manager
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
