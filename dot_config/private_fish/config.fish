@@ -18,3 +18,21 @@ set --erase _asdf_shims
 
 set -gx EDITOR nvim
 
+if test -d $HOME/Android/Sdk
+  set -gx ANDROID_HOME $HOME/Android/Sdk
+  fish_add_path $ANDROID_HOME/emulator
+  fish_add_path $ANDROID_HOME/platform-tools
+end
+
+if test -d $HOME/android-studio/bin
+  fish_add_path $HOME/android-studio/bin
+end
+
+# Detect pip executables
+fish_add_path $HOME/.local/bin
+
+# Set Golang
+source (echo $ASDF_DATA_DIR | if test -z $it; echo $HOME/.asdf; else echo $it; end)/plugins/golang/set-env.fish
+
+# Set JAVA_HOME
+. ~/.asdf/plugins/java/set-java-home.fish
