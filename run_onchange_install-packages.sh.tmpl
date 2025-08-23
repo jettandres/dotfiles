@@ -17,13 +17,14 @@
 
 {{ end }}
 
-fish
+cd ~
+exec fish
 
 # install fisher package manager
 curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
 # install tide fish prompt via fisher
-fisher install IlanCosman/tide@v6
+fisher install IlanCosman/tide
 
 # ASDF PLUGINS
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
