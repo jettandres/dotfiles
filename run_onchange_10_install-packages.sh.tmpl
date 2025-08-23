@@ -2,6 +2,17 @@
 set -e
 set -u
 
+# Ask for sudo once
+if command -v sudo >/dev/null 2>&1; then
+  sudo -v
+fi
+
+# Keep sudo alive while script runs
+# (in case it’s a long run with package installs)
+if command -v sudo >/dev/null 2>&1; then
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+fi
+
 {{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "cachyos") }}
   # Ensure yay is installed
   if ! command -v yay >/dev/null 2>&1; then
