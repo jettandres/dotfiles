@@ -32,7 +32,7 @@ end
 fish_add_path $HOME/.local/bin
 
 # Set Golang
-source (echo $ASDF_DATA_DIR | if test -z $it; echo $HOME/.asdf; else echo $it; end)/plugins/golang/set-env.fish
+source ~/.asdf/plugins/golang/set-env.fish
 
 # Set JAVA_HOME
 . ~/.asdf/plugins/java/set-java-home.fish
