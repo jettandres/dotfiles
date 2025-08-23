@@ -1,0 +1,57 @@
+#!/bin/sh
+set -e
+set -u
+
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "cachyos") }}
+  # Ensure yay is installed
+  if ! command -v yay >/dev/null 2>&1; then
+    sudo pacman -S --needed --noconfirm git base-devel
+    tmpdir=$(mktemp -d)
+    git clone https://aur.archlinux.org/yay.git "$tmpdir/yay"
+    (cd "$tmpdir/yay" && makepkg -si --noconfirm)
+    rm -rf "$tmpdir"
+  fi
+
+  # Official packages
+  sudo pacman -S --needed --noconfirm fish neovim tmux foot
+
+  # AUR packages
+  yay -S --needed --noconfirm asdf-vm
+
+  FISH_PATH="/usr/bin/fish"
+
+{{ else if eq .chezmoi.os "darwin" }}
+  # Ensure Homebrew is installed
+  if ! command -v brew >/dev/null 2>&1; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+
+  # Official packages
+  brew install fish neovim tmux || true
+
+  FISH_PATH="$(brew --prefix)/bin/fish"
+{{ end }}
+
+# --- Set fish as default shell ---
+if [ -n "${FISH_PATH:-}" ] && [ -x "$FISH_PATH" ]; then
+  # Add fish to /etc/shells if missing
+  if ! grep -q "$FISH_PATH" /etc/shells; then
+    echo "$FISH_PATH" | sudo tee -a /etc/shells >/dev/null
+  fi
+
+  # Change default shell only if needed
+  if [ "$SHELL" != "$FISH_PATH" ]; then
+    chsh -s "$FISH_PATH" "$USER"
+  fi
+fi
+
+# --- Fish configuration (idempotent) ---
+if command -v fish >/dev/null 2>&1; then
+  fish -c 'if not functions -q fisher
+              curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+           end'
+
+  fish -c 'if not contains IlanCosman/tide (fisher list)
+              fisher install IlanCosman/tide
+           end'
+fi
