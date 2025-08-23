@@ -6,8 +6,6 @@ if command -v asdf >/dev/null 2>&1; then
   # Ensure Node.js plugin
   if ! asdf plugin list | grep -q '^nodejs$'; then
     asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-    asdf install nodejs latest
-    asdf set nodejs latest
   fi
 
   # Ensure Go plugin
@@ -22,8 +20,5 @@ if command -v asdf >/dev/null 2>&1; then
   fi
 
   # Add other plugins here
-
-  asdf reshim nodejs
-  asdf reshm golang
 fi
 
