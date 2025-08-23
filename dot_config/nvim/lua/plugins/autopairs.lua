@@ -5,7 +5,7 @@ return {
       config = true
     },
     { "windwp/nvim-ts-autotag",
-      event = "LazyFile",
+      event = "InsertEnter",
       opts = {}
     },
 }
