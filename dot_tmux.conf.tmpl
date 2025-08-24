@@ -112,6 +112,11 @@ set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'alacritty'
 set -g @continuum-restore 'on'
 
+# truecolor setup
+{{ if eq .chezmoi.os "linux" }}
+set-option -a terminal-features 'foot:RGB'
+{{ end }}
+
 set -g default-terminal "tmux-256color"
 # set -ga terminal-overrides ",xterm-256color*:Tc"
 # set -ga terminal-overrides ",xterm-256color*:RGB"
