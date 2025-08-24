@@ -7,7 +7,7 @@ asdf install golang latest
 asdf install lua 5.1
 asdf install java openjdk-17
 asdf install python 3.9.1
-asdf install ruby latest
+asdf install ruby 3.3.0
 # TODO: install ruby version specific to mobile app development
 
 asdf set -u golang latest
@@ -15,7 +15,7 @@ asdf set -u nodejs latest
 asdf set -u lua 5.1
 asdf set -u java openjdk-17
 asdf set -u python 3.9.1
-asdf set -u ruby latest
+asdf set -u ruby 3.3.0
 
 asdf reshim golang
 asdf reshim nodejs
