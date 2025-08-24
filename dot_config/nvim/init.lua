@@ -16,7 +16,7 @@ require("lazy").setup("plugins")
 
 -- General setup
 require("settings")
--- require("maps")
+require("maps")
 -- require("autocmd")
 
 -- require("lspsetup")
