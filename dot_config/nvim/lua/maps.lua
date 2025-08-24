@@ -4,14 +4,14 @@ vim.keymap.set('n', '<C-n>', '<cmd>set hlsearch!<cr>', options)
 vim.keymap.set('n', 'j', 'gj', options)
 vim.keymap.set('n', 'k', 'gk', options)
 
--- telescope mappings
---vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<cr>', options)
---vim.keymap.set('n', '<C-f>', '<cmd>Telescope live_grep<cr>', options)
---vim.keymap.set('n', '<leader>ff', '<cmd>Telescope current_buffer_fuzzy_find<cr>', options)
+-- fzf-lua mappings
+vim.keymap.set('n', '<C-p>', '<cmd>FzfLua files<cr>', options)
+vim.keymap.set('n', '<C-f>', '<cmd>FzfLua live_grep<cr>', options)
+vim.keymap.set('n', '<leader>ff', '<cmd>FzfLua lgrep_curbuf<cr>', options)
 --
---vim.keymap.set('n', '<leader>p', '<cmd>Telescope buffers<cr>', options)
---vim.keymap.set('n', '<C-h>', '<cmd>Telescope help_tags<cr>', options)
---vim.keymap.set('n', '<leader><esc>', '<cmd>Telescope keymaps<cr>', options)
+vim.keymap.set('n', '<leader>p', '<cmd>FzfLua buffers<cr>', options)
+vim.keymap.set('n', '<C-h>', '<cmd>FzfLua helptags<cr>', options)
+vim.keymap.set('n', '<leader><esc>', '<cmd>FzfLua keymaps<cr>', options)
 
 -- quickfix mappings
 vim.keymap.set('n', '<M-k>', '<cmd>cprev<cr>', options)
