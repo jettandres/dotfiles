@@ -12,14 +12,21 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- remap <Leader> key to space
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
+vim.g.mapleader = " "
+
 require("lazy").setup("plugins")
 
 -- General setup
 require("settings")
 require("maps")
--- require("autocmd")
+require("autocmd")
 
--- require("lspsetup")
+vim.lsp.enable({
+  'gopls'
+})
+require("lspsetup")
 
 -- Theme
 -- vim.cmd[[colorscheme tokyonight]]
