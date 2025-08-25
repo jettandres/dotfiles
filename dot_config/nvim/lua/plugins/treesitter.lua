@@ -5,7 +5,8 @@ return {
       lazy = false,
       config = function ()
         require("nvim-treesitter.configs").setup {
-          ensure_install = { "go", "typescript", "javascript", "json" },
+          ensure_installed = { "go", "typescript", "javascript", "json" },
+          sync_installed = false,
           auto_install = true,
           highlight = {
             enable = true
@@ -21,9 +22,6 @@ return {
           matchup = {
             enable = true
           },
-          autotag = {
-            enable = true,
-          }
         }
       end
   },
