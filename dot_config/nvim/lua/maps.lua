@@ -16,13 +16,14 @@ vim.keymap.set('n', '<leader><esc>', '<cmd>FzfLua keymaps<cr>', options)
 -- quickfix mappings
 vim.keymap.set('n', '<M-k>', '<cmd>cprev<cr>', options)
 vim.keymap.set('n', '<M-j>', '<cmd>cnext<cr>', options)
+vim.keymap.set('n', '<leader>fq', '<cmd>copen<cr>', options)
 
 -- buffer mappings
 vim.keymap.set('n', '<M-h>', '<cmd>bprev<cr>', options)
 vim.keymap.set('n', '<M-l>', '<cmd>bnext<cr>', options)
 
 -- nvim tree mappings
---vim.keymap.set('n', '<C-b>', '<cmd>NvimTreeFindFileToggle<cr>', options)
+vim.keymap.set('n', '<C-b>', '<cmd>Oil<cr>', options)
 
 -- vim-fugitive mappings
 --vim.keymap.set('n', '<leader>fc', '<cmd>Gvdiffsplit!<cr>', options)
