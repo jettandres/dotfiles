@@ -26,7 +26,7 @@ require("autocmd")
 vim.lsp.enable({
   'gopls',
   'luals',
-  'tsls'
+  'tsls',
 })
 require("lspsetup")
 

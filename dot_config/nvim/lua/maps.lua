@@ -38,3 +38,26 @@ vim.keymap.set('n', '<C-b>', '<cmd>Oil<cr>', options)
 
 -- treesitter syntax highlighting fix
 vim.keymap.set('n', '<leader>w', '<C-o><cmd>write | edit | TSBufEnable highlight<cr>', options)
+
+-- nvim-lint automatic fixing
+-- Autofix entire buffer with eslint_d and then re-run linter
+vim.keymap.set("n", "<leader>fa", function()
+  -- Save cursor position
+  vim.cmd("normal! mF")
+  -- Run eslint_d on the whole buffer
+  vim.cmd("%!eslint_d --stdin --fix-to-stdout --stdin-filename " .. vim.fn.expand("%:p"))
+  -- Restore cursor
+  vim.cmd("normal! `F")
+  -- Trigger lint refresh
+  require("lint").try_lint()
+end, { desc = "Eslint_d fix whole buffer" })
+
+-- Autofix visual selection with eslint_d and then re-run linter
+vim.keymap.set("v", "<leader>fa", function()
+  -- Run eslint_d on the selection
+  vim.cmd("'<,'>!eslint_d --stdin --fix-to-stdout")
+  -- Reselect the same visual region
+  vim.cmd("normal! gv")
+  -- Trigger lint refresh
+  require("lint").try_lint()
+end, { desc = "Eslint_d fix selection" })
