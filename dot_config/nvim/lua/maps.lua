@@ -50,14 +50,10 @@ vim.keymap.set("n", "<leader>fa", function()
   vim.cmd("normal! `F")
   -- Trigger lint refresh
   require("lint").try_lint()
-end, { desc = "Eslint_d fix whole buffer" })
+end, { desc = "eslint_d fix whole buffer" })
 
--- Autofix visual selection with eslint_d and then re-run linter
-vim.keymap.set("v", "<leader>fa", function()
-  -- Run eslint_d on the selection
-  vim.cmd("'<,'>!eslint_d --stdin --fix-to-stdout")
-  -- Reselect the same visual region
-  vim.cmd("normal! gv")
-  -- Trigger lint refresh
-  require("lint").try_lint()
-end, { desc = "Eslint_d fix selection" })
+-- Autofix visual selection with eslint_d
+vim.keymap.set("v", "<leader>fa",
+  ":!eslint_d --stdin --fix-to-stdout<CR>gv",
+  { noremap = true, silent = true, desc = "eslint_d fix selection" }
+)
