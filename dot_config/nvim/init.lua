@@ -24,7 +24,9 @@ require("maps")
 require("autocmd")
 
 vim.lsp.enable({
-  'gopls'
+  'gopls',
+  'luals',
+  'tsls'
 })
 require("lspsetup")
 
