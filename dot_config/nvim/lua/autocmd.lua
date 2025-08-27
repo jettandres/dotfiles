@@ -93,3 +93,14 @@ vim.api.nvim_create_autocmd('Filetype', {
     )
   end
 })
+
+-- keymaps for lsp
+vim.api.nvim_create_autocmd('Filetype', {
+  group = vim.api.nvim_create_augroup('my.lsp.general.keymaps', { clear = false }),
+  pattern = { 'go', 'lua', }, -- add as needed
+  callback = function(args)
+    vim.keymap.set('n', '<leader>fa', function()
+      vim.lsp.buf.format({ bufnr = args.buf, timeout_ms = 1000 })
+    end, { desc = 'format the current file in buffer' })
+  end
+})
