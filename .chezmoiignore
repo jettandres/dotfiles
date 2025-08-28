@@ -1,3 +1,16 @@
 README.md
 *.nix
+
+# Ignore Nvim lazy-lock
 .config/nvim/lazy-lock.json
+
+# Ignore Fisher's plugin installation directory
+.config/fish/fish_plugins.d/**
+
+# Ignore Tide's automatically generated theme files
+.config/fish/themes/**
+
+# Ignore Fish shell's auto-generated files
+.config/fish/fishd.*
+.cache/fish/**
+.local/share/fish/**
