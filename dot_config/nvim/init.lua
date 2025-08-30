@@ -30,7 +30,9 @@ vim.lsp.enable({
   'svelte',
   'css'
 })
+
 require("lspsetup")
+require("minisetup")
 
 -- Theme
--- vim.cmd[[colorscheme tokyonight]]
+vim.cmd.colorscheme('minischeme')
