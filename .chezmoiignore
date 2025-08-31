@@ -4,16 +4,21 @@ README.md
 # Ignore Nvim lazy-lock
 .config/nvim/lazy-lock.json
 
-# Ignore Fisher's plugin installation directory
+# ─── Fisher Plugin Manager ──────────────────────────────
+# Keep only fish_plugins (plugin list), ignore plugin-installed files
+.config/fish/conf.d/**
+.config/fish/functions/**
+.config/fish/completions/**
 .config/fish/fish_plugins.d/**
 
-# Ignore Tide's automatically generated theme files
+# ─── Themes (Tide auto-generated themes + helpers) ──────
 .config/fish/themes/**
+.config/fish/functions/__tide_*   # all Tide helper functions
 
-# Ignore Fish shell's auto-generated files
+# ─── Fish Shell Auto-Generated Files ────────────────────
 .config/fish/fishd.*
 .cache/fish/**
 .local/share/fish/**
 
-# Ignore Fish Universal variables
+# ─── Universal Variables (machine-specific) ─────────────
 .config/fish/fish_variables
