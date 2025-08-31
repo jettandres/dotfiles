@@ -8,6 +8,7 @@ o.splitbelow = true
 o.ignorecase = true
 o.smartcase = true
 o.updatetime = 100
+o.splitright = true
 
 -- window-local options
 wo.number = true

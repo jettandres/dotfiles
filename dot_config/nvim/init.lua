@@ -28,7 +28,7 @@ vim.lsp.enable({
   'luals',
   'tsls',
   'svelte',
-  'css'
+  'css',
 })
 
 require("lspsetup")
