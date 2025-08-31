@@ -14,3 +14,6 @@ README.md
 .config/fish/fishd.*
 .cache/fish/**
 .local/share/fish/**
+
+# Ignore Fish Universal variables
+.config/fish/fish_variables
