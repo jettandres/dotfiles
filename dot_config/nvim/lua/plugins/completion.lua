@@ -19,7 +19,9 @@ return {
       -- C-k: Toggle signature help (if signature.enabled = true)
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
-      keymap = { preset = 'default' },
+      keymap = {
+        preset = 'default',
+      },
 
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -35,7 +37,7 @@ return {
           auto_show = false,
           draw = {
             treesitter = { 'lsp' },
-            columns = { { "kind_icon" }, { "label", gap = 1 } },
+            columns = { { "kind_icon" }, { "label", gap = 1 }, { "kind" } },
             components = {
               label = {
                 text = function(ctx)
@@ -49,6 +51,10 @@ return {
               },
             },
           }
+        },
+        trigger = {
+          -- Recommended by minuet-ai to avoid unnecessary request
+          prefetch_on_insert = false
         }
       },
 
@@ -64,7 +70,7 @@ return {
           dictionary = {
             name = 'blink-cmp-words',
             module = 'blink-cmp-words.dictionary'
-          }
+          },
         },
         per_filetype = {
           text = { 'dictionary', 'thesaurus' },

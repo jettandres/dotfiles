@@ -4,9 +4,9 @@ return {
   opts = {
     keymap = {
       builtin = {
-	true,
-        ["<C-d>"]    = "preview-page-down",
-        ["<C-u>"]    = "preview-page-up",
+        true,
+        ["<C-d>"] = "preview-page-down",
+        ["<C-u>"] = "preview-page-up",
       }
     }
   }
