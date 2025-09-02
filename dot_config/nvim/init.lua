@@ -23,12 +23,25 @@ require("settings")
 require("maps")
 require("autocmd")
 
+-- Configure docker compose lsp
+vim.lsp.config('dockercompose', {
+  root_dir = function(bufnr, on_dir)
+    local name = vim.fn.fnamemodify(vim.fn.bufname(bufnr), ':t')
+    if name == 'compose.yaml' or name == "docker-compose.yaml" then
+      on_dir(vim.loop.cwd())
+    end
+  end,
+})
+
+-- Enable LSP
 vim.lsp.enable({
   'gopls',
   'luals',
   'tsls',
   'svelte',
   'css',
+  'dockercompose',
+  'dockerfile'
 })
 
 require("lspsetup")
