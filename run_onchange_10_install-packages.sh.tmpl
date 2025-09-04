@@ -27,9 +27,11 @@ set -u
   fi
 
   # Official packages
-  brew install fish neovim tmux || true
+  brew install fish neovim tmux asdf || true
 
   FISH_PATH="$(brew --prefix)/bin/fish"
+
+# TODO: add package installation for other linux distro (e.g. Fedora for NobaraOS)
 {{ end }}
 
 # --- Set fish as default shell ---
