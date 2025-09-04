@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 
 -- built-in nvim lsp
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('my.lsp', {}),
+  group = vim.api.nvim_create_augroup('my.lsp', { clear = true }),
   callback = function(args)
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
@@ -58,7 +58,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if not client:supports_method('textDocument/willSaveWaitUntil')
         and client:supports_method('textDocument/formatting') then
       vim.api.nvim_create_autocmd('BufWritePre', {
-        group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
         buffer = args.buf,
         callback = function()
           vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
@@ -73,6 +72,13 @@ vim.api.nvim_create_autocmd('Filetype', {
   group = vim.api.nvim_create_augroup('my.lsp.ts_ls.keymaps', { clear = false }),
   pattern = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
   callback = function()
+    -- shiftwidth fix
+    -- this fixes my long time issue wherein everytime a new buffer is opened,
+    -- the autoformatting is broken
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+    vim.bo.expandtab = true
+
     -- nvim-lint automatic fixing
     -- Autofix entire buffer with eslint_d and then re-run linter
     vim.keymap.set("n", "<leader>fa", function()
@@ -103,4 +109,14 @@ vim.api.nvim_create_autocmd('Filetype', {
       vim.lsp.buf.format({ bufnr = args.buf, timeout_ms = 1000 })
     end, { desc = 'format the current file in buffer' })
   end
+})
+
+-- lua shiftwidth fix
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+    vim.bo.expandtab = true
+  end,
 })

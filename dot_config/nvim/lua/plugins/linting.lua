@@ -12,9 +12,7 @@ return {
     }
 
     -- Auto lint on save, insert leave, or buffer enter
-    local augroup = vim.api.nvim_create_augroup("nvim_linting", { clear = true })
     vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave", "BufEnter" }, {
-      group = augroup,
       callback = function() lint.try_lint() end,
     })
   end
