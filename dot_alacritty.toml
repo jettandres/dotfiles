@@ -24,8 +24,11 @@ style = "Regular"
 program = "/bin/fish"
 
 [window]
-opacity = 0.95
+opacity = 1.00
 
 [window.dimensions]
 columns = 125
 lines = 30
+
+[colors.primary]
+background = "#112641"
