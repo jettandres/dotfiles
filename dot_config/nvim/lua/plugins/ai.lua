@@ -12,13 +12,13 @@ return {
     opts = {
       strategies = {
         chat = {
-          adapter = "locallama"
+          adapter = "gemuning"
         },
         inline = {
-          adapter = "locallama"
+          adapter = "gemuning"
         },
         cmd = {
-          adapter = "locallama"
+          adapter = "gemuning"
         }
       },
       adapters = {
@@ -86,7 +86,7 @@ return {
             -- Save all chats by default (disable to save only manually using 'sc')
             auto_save = true,
             -- Number of days after which chats are automatically deleted (0 to disable)
-            expiration_days = 0,
+            expiration_days = 3,
             -- Picker interface (auto resolved to a valid picker)
             picker = "fzf-lua", --- ("telescope", "snacks", "fzf-lua", or "default")
             ---Optional filter function to control which chats are shown when browsing
@@ -98,7 +98,7 @@ return {
               duplicate = { n = "<C-y>", i = "<C-y>" },
             },
             ---Automatically generate titles for new chats
-            auto_generate_title = false,
+            auto_generate_title = true,
             title_generation_opts = {
               ---Adapter for generating titles (defaults to current chat adapter)
               adapter = "gemini",          -- "copilot"
