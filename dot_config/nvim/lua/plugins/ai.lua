@@ -64,6 +64,26 @@ return {
             })
           end
         },
+        acp = {
+          gemuning_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              defaults = {
+                auth_method = "gemini-api-key", -- "oauth-personal"|"gemini-api-key"|"vertex-ai"
+              },
+              env = {
+                GEMINI_API_KEY = "GEMINI_API_KEY",
+              },
+              schema = {
+                model = {
+                  default = "gemini-2.0-flash"
+                },
+                think = {
+                  default = false,
+                },
+              }
+            })
+          end,
+        },
       },
       extensions = {
         mcphub = {
@@ -103,7 +123,7 @@ return {
               ---Adapter for generating titles (defaults to current chat adapter)
               adapter = "gemini",          -- "copilot"
               ---Model for generating titles (defaults to current chat model)
-              model = "gemini-2.0-flash",  -- "gpt-4o"
+              model = "gemini-2.5-flash",  -- "gpt-4o"
               ---Number of user prompts after which to refresh the title (0 to disable)
               refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
               ---Maximum number of times to refresh the title (default: 3)
@@ -134,8 +154,8 @@ return {
 
               generation_opts = {
                 adapter = "gemini",          -- defaults to current chat adapter
-                model = "gemini-2.0-flash",  -- defaults to current chat model
-                context_size = 90000,        -- max tokens that the model supports
+                model = "gemini-2.5-flash",  -- defaults to current chat model
+                context_size = 90001,        -- max tokens that the model supports
                 include_references = true,   -- include slash command content
                 include_tool_outputs = true, -- include tool execution results
                 system_prompt = nil,         -- custom system prompt (string or function)
