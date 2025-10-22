@@ -61,7 +61,7 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'minuet' },
         providers = {
           thesaurus = {
             name = 'blink-cmp-words',
@@ -70,6 +70,16 @@ return {
           dictionary = {
             name = 'blink-cmp-words',
             module = 'blink-cmp-words.dictionary'
+          },
+          -- AI auto-complete
+          minuet = {
+            name = 'minuet',
+            module = 'minuet.blink',
+            async = true,
+            -- Should match minuet.config.request_timeout * 1000,
+            -- since minuet.config.request_timeout is in seconds
+            timeout_ms = 3000,
+            score_offset = 50, -- Gives minuet higher priority among suggestions
           },
         },
         per_filetype = {
