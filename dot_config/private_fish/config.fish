@@ -1,6 +1,6 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    atuin init fish | source
+    atuin init fish --disable-up-arrow | source
 end
 
 # ASDF configuration code
