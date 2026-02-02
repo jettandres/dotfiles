@@ -37,3 +37,6 @@ fish_add_path $HOME/.local/bin
 
 # Set JAVA_HOME
 . ~/.asdf/plugins/java/set-java-home.fish
+
+# opencode
+fish_add_path /home/jettandres/.opencode/bin
