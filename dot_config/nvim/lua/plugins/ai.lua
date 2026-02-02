@@ -12,7 +12,7 @@ return {
     opts = {
       strategies = {
         chat = {
-          adapter = "gemuning"
+          adapter = "opencode"
         },
         inline = {
           adapter = "gemuning"
@@ -202,10 +202,6 @@ return {
         }
       }
     },
-  },
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "codecompanion" }
   },
   {
     "Davidyz/VectorCode",
