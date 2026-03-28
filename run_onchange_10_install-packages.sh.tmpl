@@ -15,9 +15,6 @@ set -u
   # Official packages
   sudo pacman -S --needed --noconfirm fish neovim tmux foot
 
-  # AUR packages
-  yay -S --needed --noconfirm asdf-vm
-
   FISH_PATH="/usr/bin/fish"
 
 {{ else if eq .chezmoi.os "darwin" }}
@@ -27,7 +24,7 @@ set -u
   fi
 
   # Official packages
-  brew install fish neovim tmux asdf || true
+  brew install fish neovim tmux || true
 
   FISH_PATH="$(brew --prefix)/bin/fish"
 
