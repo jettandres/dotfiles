@@ -39,4 +39,15 @@ fish_add_path $HOME/.local/bin
 . ~/.asdf/plugins/java/set-java-home.fish
 
 # opencode
-fish_add_path /home/jettandres/.opencode/bin
+if test -d /home/jettandres
+  fish_add_path /home/jettandres/.opencode/bin
+else if test -d /home/jett
+  fish_add_path /home/jett/.opencode/bin
+end
+
+# opencode
+fish_add_path /home/jett/.opencode/bin
+function pi
+  set -lx AWS_REGION "ap-south-1"
+  command pi $argv
+end
