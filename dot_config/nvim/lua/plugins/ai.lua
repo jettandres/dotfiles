@@ -9,6 +9,23 @@ return {
       "Davidyz/VectorCode",
       "ravitemer/codecompanion-history.nvim"
     },
+    config = function()
+      require("codecompanion").setup({
+        interactions = {
+          cli = {
+            agent = "claude_code",
+            agents = {
+              claude_code = {
+                cmd = "claude",
+                args = {},
+                description = "Claude Code CLI",
+                provider = "terminal",
+              },
+            },
+          },
+        },
+      })
+    end,
     opts = {
       strategies = {
         chat = {
@@ -20,19 +37,6 @@ return {
         cmd = {
           adapter = "gemuning"
         }
-      },
-      interactions = {
-        cli = {
-          agent = "claude_code",
-          agents = {
-            claude_code = {
-              cmd = "claude",
-              args = {},
-              description = "Claude Code CLI",
-              provider = "terminal",
-            },
-          },
-        },
       },
       adapters = {
         http = {
