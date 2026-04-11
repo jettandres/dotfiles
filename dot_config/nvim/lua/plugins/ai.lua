@@ -23,103 +23,31 @@ return {
               },
             },
           },
+          chat = {
+            adapter = "claude_code"
+            -- adapter = {
+            --   name = "opencode",
+            --   model = "OpenCode Zen/Big Pickle"
+            -- }
+          },
+          inline = {
+            adapter = "gemuning",
+          },
+        },
+        adapters = {
+          acp = {
+            claude_code = function()
+              return require("codecompanion.adapters").extend("claude_code", {
+                env = {
+                  CLAUDE_CODE_OAUTH_TOKEN = "CLAUDE_CODE_OAUTH_TOKEN",
+                },
+              })
+            end,
+          },
         },
       })
     end,
     opts = {
-      strategies = {
-        chat = {
-          adapter = "opencode"
-        },
-        inline = {
-          adapter = "gemuning"
-        },
-        cmd = {
-          adapter = "gemuning"
-        }
-      },
-      adapters = {
-        http = {
-          locallama = function()
-            return require("codecompanion.adapters").extend("ollama", {
-              name = "locallama", -- Give this adapter a different name to differentiate it from the default ollama adapter
-              opts = {
-                vision = false,
-                stream = true,
-              },
-              schema = {
-                model = {
-                  default = "qwen2.5-coder:3b",
-                },
-                num_ctx = {
-                  default = 20000,
-                },
-                think = {
-                  default = false,
-                },
-                keep_alive = {
-                  default = "5m",
-                },
-              },
-            })
-          end,
-          gemuning = function()
-            return require("codecompanion.adapters").extend("gemini", {
-              name = "gemuning",
-              opts = {
-                vision = false,
-                stream = true,
-              },
-              schema = {
-                model = {
-                  default = "gemini-2.0-flash"
-                },
-                think = {
-                  default = false,
-                },
-              }
-            })
-          end
-        },
-        acp = {
-          gemuning_cli = function()
-            return require("codecompanion.adapters").extend("gemini_cli", {
-              defaults = {
-                auth_method = "gemini-api-key", -- "oauth-personal"|"gemini-api-key"|"vertex-ai"
-              },
-              env = {
-                GEMINI_API_KEY = "GEMINI_API_KEY",
-              },
-              schema = {
-                model = {
-                  default = "gemini-2.0-flash"
-                },
-                think = {
-                  default = false,
-                },
-              }
-            })
-          end,
-          gemuning_reloaded_cli = function()
-            return require("codecompanion.adapters").extend("gemini_cli", {
-              defaults = {
-                auth_method = "gemini-api-key", -- "oauth-personal"|"gemini-api-key"|"vertex-ai"
-              },
-              env = {
-                GEMINI_API_KEY = "GEMINI_API_KEY",
-              },
-              schema = {
-                model = {
-                  default = "gemini-2.5-flash"
-                },
-                think = {
-                  default = false,
-                },
-              }
-            })
-          end,
-        },
-      },
       extensions = {
         mcphub = {
           callback = "mcphub.extensions.codecompanion",
@@ -219,13 +147,6 @@ return {
         }
       }
     },
-  },
-  {
-    "Davidyz/VectorCode",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    version = "*",
-    build = "uv tool upgrade vectorcode",
-    cmd = "VectorCode", -- if you're lazy-loading VectorCode
   },
   {
     'milanglacier/minuet-ai.nvim',
