@@ -27,7 +27,7 @@ end
 
 # opencode
 fish_add_path /home/jett/.opencode/bin
-function pi
+function opencode
   set -lx AWS_REGION "ap-south-1"
-  command pi $argv
+  command opencode $argv
 end
