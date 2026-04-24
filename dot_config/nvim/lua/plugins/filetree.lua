@@ -9,6 +9,10 @@ return {
       },
       win_options = {
         signcolumn = "yes:2"
+      },
+      keymaps = {
+        ["<C-p>"] = false,
+        ["="] = "actions.preview"
       }
     },
     -- Optional dependencies
