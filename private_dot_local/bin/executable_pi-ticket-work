@@ -1,0 +1,396 @@
+#!/usr/bin/env python3
+"""pi-ticket-work — Pi RPC orchestrator for pi-kanban tickets.
+
+Usage:
+  pi-ticket-work --new    <ticket-file>
+  pi-ticket-work --resume <ticket-file>
+"""
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+
+# ── Parse arguments ─────────────────────────────────────────────────
+
+parser = argparse.ArgumentParser()
+group = parser.add_mutually_exclusive_group(required=True)
+group.add_argument("--new", action="store_true")
+group.add_argument("--resume", action="store_true")
+parser.add_argument("ticket_file")
+args = parser.parse_args()
+
+mode = "new" if getattr(args, "new") else "resume"
+ticket_file = os.path.abspath(args.ticket_file)
+
+if not os.path.isfile(ticket_file):
+    print(f"ERROR: file not found: {ticket_file}", file=sys.stderr)
+    sys.exit(1)
+
+# ── Parse ticket frontmatter ────────────────────────────────────────
+
+def parse_frontmatter(path):
+    fm = {}
+    with open(path) as f:
+        first = f.readline().strip()
+        if not first.startswith("---"):
+            return None
+        for line in f:
+            line = line.strip()
+            if line.startswith("---"):
+                break
+            m = re.match(r"^([\w-]+):\s*(.*)$", line)
+            if m:
+                fm[m.group(1)] = m.group(2).strip()
+    return fm
+
+def read_ticket_body(path):
+    """Return everything after the closing --- of frontmatter."""
+    with open(path) as f:
+        f.readline()  # opening ---
+        for line in f:
+            if line.strip().startswith("---"):
+                break
+        return f.read()
+
+fm = parse_frontmatter(ticket_file)
+if not fm:
+    print("ERROR: no frontmatter in ticket", file=sys.stderr)
+    sys.exit(1)
+
+ticket_id = fm.get("id", "UNKNOWN")
+ticket_title = fm.get("title", "untitled")
+repo = fm.get("repo", "")
+session_path = fm.get("session-path", "")
+branch = fm.get("branch", "")
+ticket_body = read_ticket_body(ticket_file)
+
+# Extract review feedback for --resume
+review_feedback = ""
+if mode == "resume":
+    m = re.search(r"## Review Feedback\s*\n(.*?)(?=\n## |\Z)", ticket_body, re.DOTALL)
+    if m:
+        review_feedback = m.group(1).strip()
+    if not review_feedback:
+        print("ERROR: no review feedback in ticket", file=sys.stderr)
+        sys.exit(1)
+
+# ── Build prompt ────────────────────────────────────────────────────
+
+if mode == "new":
+    worktree_base = os.path.splitext(os.path.basename(ticket_file))[0]
+    worktree_dir = f"../{worktree_base}"
+    proposed_branch = f"ticket-{ticket_id}"
+
+    prompt = f"""You are an expert coding agent. You are working on the project at {repo}.
+
+## Project Context
+- Repository: {repo}
+- Layout: monorepo with see README for project layout
+- README at repo root has build/test commands
+
+## Ticket: {ticket_title}
+
+{ticket_body}
+
+## Workflow (IMPORTANT — follow exactly)
+
+1. Create a git worktree for this task:
+   cd {repo}
+   git worktree add {worktree_dir} -b {proposed_branch}
+   cd {worktree_dir}
+
+2. Work inside the worktree. Implement the changes described in the ticket.
+   Read relevant files first. Make targeted edits. Run tests if applicable.
+
+3. When done, commit with a descriptive message:
+   git add -A
+   git commit -m "ticket {ticket_id}: <brief description>"
+
+4. Then cd back to the main repo:
+   cd {repo}
+
+5. Do NOT merge to main. Do NOT remove the worktree. Do NOT open a PR.
+
+6. At the VERY END of your response, output exactly this line on its own:
+   BRANCH=ticket-{ticket_id}
+   Nothing else on that line. This is parsed by automation."""
+else:
+    prompt = f"""You previously worked on ticket {ticket_id} for the project at {repo}.
+Your existing branch is {branch}.
+
+The reviewer requested the following changes:
+
+{review_feedback}
+
+## Instructions
+
+1. Resume work on your existing branch inside its worktree:
+   cd {repo}
+   git worktree list  # find the worktree for this ticket
+   # Cd into that worktree
+
+2. Address the review feedback above. Make targeted edits.
+
+3. Commit changes:
+   git add -A
+   git commit -m "ticket {ticket_id}: address review feedback"
+
+4. Cd back to the main repo. Do NOT merge. Do NOT remove the worktree.
+
+5. At the VERY END of your response, output exactly:
+   ADDRESSED REVIEW FEEDBACK
+   BRANCH={branch}"""
+
+# ── Run Pi via RPC ─────────────────────────────────────────────────
+
+log_file = f"/tmp/pi-ticket-{ticket_id}.log"
+
+def log(msg):
+    print(msg)
+    with open(log_file, "a") as f:
+        f.write(msg + "\n")
+
+log(f"=== pi-ticket-work starting ===")
+log(f"  mode:     {mode}")
+log(f"  ticket:   {ticket_id} - {ticket_title}")
+log(f"  repo:     {repo}")
+if session_path:
+    log(f"  session:  {session_path}")
+log("")
+
+pi_args = ["pi", "--mode", "rpc", "--approve"]
+if mode == "resume" and session_path:
+    pi_args.extend(["--session", session_path])
+else:
+    pi_args.extend(["--name", f"pi-ticket-{ticket_id}"])
+    session_path = ""
+
+proc = subprocess.Popen(
+    pi_args,
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE,
+    text=True,
+)
+
+log(f"  pi pid:   {proc.pid}")
+log(f"  prompt sent, waiting for agent...")
+log("")
+
+# Send prompt
+prompt_cmd = json.dumps({"type": "prompt", "message": prompt})
+proc.stdin.write(prompt_cmd + "\n")
+proc.stdin.flush()
+
+# ── Read events ─────────────────────────────────────────────────────
+
+result_text = ""
+extracted_branch = ""
+got_state = False
+got_text = False
+state = "streaming"
+
+for line in proc.stdout:
+    try:
+        event = json.loads(line)
+    except json.JSONDecodeError:
+        continue
+
+    event_type = event.get("type", "")
+
+    if state == "streaming":
+        if event_type == "agent_settled":
+            log("")
+            log("--- pi finished work, collecting results ---")
+            state = "querying"
+            # Send follow-up queries
+            proc.stdin.write(json.dumps({"type": "get_state"}) + "\n")
+            proc.stdin.write(json.dumps({"type": "get_last_assistant_text"}) + "\n")
+            proc.stdin.flush()
+
+        elif event_type == "tool_execution_start":
+            tn = event.get("toolName", "?")
+            log(f"[pi] → {tn}")
+
+        elif event_type == "tool_execution_end":
+            log("[pi] ← done")
+
+        elif event_type == "message_update":
+            delta = event.get("assistantMessageEvent", {}).get("delta", "")
+            if delta:
+                sys.stdout.write(delta)
+                sys.stdout.flush()
+                with open(log_file, "a") as f:
+                    f.write(delta)
+
+        elif event_type == "response":
+            if event.get("command") == "prompt" and not event.get("success"):
+                err = event.get("error", "unknown")
+                log(f"ERROR: prompt rejected: {err}")
+                state = "error"
+
+        elif event_type == "agent_end":
+            if event.get("willRetry"):
+                log("[pi] retrying...")
+
+    elif state == "querying":
+        if event_type == "response":
+            cmd = event.get("command", "")
+            if cmd == "get_state":
+                session_path = event.get("data", {}).get("sessionFile", "")
+                got_state = True
+                log(f"  session: {session_path}")
+            elif cmd == "get_last_assistant_text":
+                result_text = event.get("data", {}).get("text", "") or ""
+                got_text = True
+            if got_state and got_text:
+                break
+
+# ── Cleanup ─────────────────────────────────────────────────────────
+
+proc.stdin.close()
+try:
+    proc.wait(timeout=5)
+except subprocess.TimeoutExpired:
+    proc.kill()
+    proc.wait()
+
+log("")
+log("--- pi process ended ---")
+
+# ── Extract branch ─────────────────────────────────────────────────
+
+m = re.search(r"^BRANCH=(.+)$", result_text, re.MULTILINE)
+if m:
+    extracted_branch = m.group(1).strip()
+else:
+    extracted_branch = f"ticket-{ticket_id}"
+    log(f"WARNING: could not extract branch, using {extracted_branch}")
+
+log(f"  branch:   {extracted_branch}")
+log(f"  session:  {session_path}")
+
+# ── Update ticket ───────────────────────────────────────────────────
+
+def update_ticket(path):
+    with open(path) as f:
+        lines = f.readlines()
+
+    updated = []
+    for line in lines:
+        stripped = line.rstrip("\n")
+        m = re.match(r"^([\w-]+):\s*(.*)", stripped)
+        if m:
+            key = m.group(1)
+            if key == "status":
+                updated.append("status: IN REVIEW\n")
+            elif key == "session-path" and session_path:
+                updated.append(f"session-path: {session_path}\n")
+            elif key == "branch" and extracted_branch:
+                updated.append(f"branch: {extracted_branch}\n")
+            elif key == "pr-url":
+                # Don't touch pr-url here — set after PR creation
+                updated.append(line)
+            else:
+                updated.append(line)
+        else:
+            updated.append(line)
+
+    with open(path, "w") as f:
+        f.writelines(updated)
+
+update_ticket(ticket_file)
+log("  ticket updated → IN REVIEW")
+log(f"  session-path: {session_path or '(not set yet)'}")
+log(f"  branch: {extracted_branch}" if extracted_branch else "  branch: (not set yet)")
+
+# ── Create PR ───────────────────────────────────────────────────────
+
+if subprocess.call(["which", "gh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) == 0:
+    log("")
+    log("--- creating PR ---")
+
+    # Push branch using token auth (no SSH passphrase needed)
+    # Get remote URL and push with token in URL
+    remote_result = subprocess.run(
+        ["git", "-C", repo, "remote", "get-url", "origin"],
+        capture_output=True, text=True, timeout=10
+    )
+    remote_url = remote_result.stdout.strip()
+    gh_token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
+
+    if remote_url.startswith("git@github.com:") and gh_token:
+        # Convert SSH remote to HTTPS with token
+        owner_repo = remote_url.replace("git@github.com:", "").replace(".git", "")
+        push_url = f"https://x-access-token:{gh_token}@github.com/{owner_repo}"
+        log(f"  pushing {extracted_branch} via token...")
+        push_result = subprocess.run(
+            ["git", "-C", repo, "push", push_url, extracted_branch],
+            capture_output=True, text=True, timeout=30
+        )
+        if push_result.returncode != 0:
+            log(f"  WARNING: push failed: {push_result.stderr.strip()}")
+        else:
+            log(f"  pushed {extracted_branch}")
+    elif gh_token:
+        log(f"  pushing {extracted_branch} via token...")
+        push_result = subprocess.run(
+            ["git", "-C", repo, "push", "origin", extracted_branch],
+            capture_output=True, text=True, timeout=30,
+            env={**os.environ, "GIT_TERMINAL_PROMPT": "0"}
+        )
+        if push_result.returncode != 0:
+            log(f"  WARNING: push failed: {push_result.stderr.strip()}")
+        else:
+            log(f"  pushed {extracted_branch}")
+    else:
+        log(f"  WARNING: no GITHUB_TOKEN, skipping push")
+        log(f"  Push manually: git -C {repo} push -u origin {extracted_branch}")
+    pr_title = f"[#{ticket_id}] {ticket_title}"
+    pr_body = f"""Closes ticket: {ticket_id}
+
+{ticket_body}
+
+---
+*Automated by pi-ticket-work*"""
+
+    try:
+        env = os.environ.copy()
+        env["GH_NO_KEYRING"] = "1"
+        result = subprocess.run(
+            ["gh", "pr", "create",
+             "--base", "main",
+             "--head", extracted_branch,
+             "--title", pr_title,
+             "--body", pr_body],
+            capture_output=True, text=True, timeout=30,
+            cwd=repo,              # run from repo dir instead of --repo flag
+            env=env
+        )
+        pr_url = result.stdout.strip()
+        if result.returncode == 0 and pr_url:
+            log(f"  {pr_url}")
+            # Update pr-url in ticket
+            with open(ticket_file) as f:
+                lines = f.readlines()
+            with open(ticket_file, "w") as f:
+                for line in lines:
+                    m = re.match(r"^(pr-url):\s*.*", line)
+                    if m:
+                        f.write(f"pr-url: {pr_url}\n")
+                    else:
+                        f.write(line)
+        else:
+            log(f"  WARNING: PR creation failed ({result.stderr.strip()})")
+    except Exception as e:
+        log(f"  WARNING: PR creation failed: {e}")
+else:
+    log("  WARNING: gh CLI not found, skipping PR")
+
+log("")
+log("=== done ===")
+log(f"Log: {log_file}")

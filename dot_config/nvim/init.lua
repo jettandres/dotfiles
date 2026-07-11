@@ -47,5 +47,8 @@ vim.lsp.enable({
 require("lspsetup")
 require("minisetup")
 
+-- pi-kanban: vimwiki-based kanban with Pi RPC
+require("pi-kanban").setup()
+
 -- Theme
 vim.cmd.colorscheme('minischeme')
