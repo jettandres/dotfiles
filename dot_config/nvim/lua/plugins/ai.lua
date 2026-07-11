@@ -1,5 +1,20 @@
 return {
   {
+    dir = "/home/jettandres/codes/neopi",
+    config = function()
+      require("neopi").setup({
+        backend = "acpx",
+        acpx = {
+          command = "acpx",
+          agent = "pi",
+          format = "text",
+          permissions = "approve-all",
+        },
+
+      })
+    end,
+  },
+  {
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
