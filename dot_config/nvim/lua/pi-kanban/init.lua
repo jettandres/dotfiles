@@ -263,29 +263,66 @@ local function find_project()
   return nil
 end
 
--- ── Status change detection ────────────────────────────────────────
 
-local function on_buf_write_post(args)
-  local proj = find_project()
-  if not proj then return end
 
-  local file = vim.api.nvim_buf_get_name(args.buf)
-  if not file:match("^" .. vim.pesc(tickets_dir(proj)) .. "/.*%.md$") then return end
+-- ── Cleanup when ticket is marked DONE ─────────────────────────────
 
-  local new_status = get_frontmatter_status(file)
-  if not new_status then return end
+function M.cleanup_done(filepath)
+  local fm = parse_frontmatter(filepath)
+  if not fm then return end
 
-  local old_status = vim.b[args.buf]._pi_kanban_old_status
-  vim.b[args.buf]._pi_kanban_old_status = new_status
+  local branch = (fm.branch or ""):match("%S") and fm.branch
+  local repo = (fm.repo or ""):match("%S") and fm.repo
+  local ticket_id = fm.id or "?"
 
-  -- Debug: always show what we detected
-  vim.notify(string.format("pi-kanban: %s → %s", old_status or "nil", new_status), vim.log.levels.INFO)
-
-  if old_status == "TODO" and new_status == "IN PROGRESS" then
-    M.trigger_work(file, "new")
-  elseif old_status == "IN REVIEW" and new_status == "IN PROGRESS" then
-    M.trigger_work(file, "resume")
+  if not repo then
+    vim.notify("pi-kanban: no repo in ticket, skipping cleanup", vim.log.levels.WARN)
+    return
   end
+
+  local cleanup_msgs = {}
+
+  -- Find and remove the worktree
+  if branch then
+    local raw = vim.fn.systemlist({ "git", "-C", repo, "worktree", "list" })
+    for _, line in ipairs(raw) do
+      if line:find(vim.pesc("[" .. branch .. "]"), 1, true) then
+        local wt_path = line:match("^(%S+)")
+        if wt_path and wt_path ~= repo then
+          local result = vim.fn.system({ "git", "-C", repo, "worktree", "remove", wt_path, "--force" })
+          if vim.v.shell_error == 0 then
+            table.insert(cleanup_msgs, "worktree removed")
+          else
+            local err = vim.trim(result)
+            table.insert(cleanup_msgs, "worktree removal failed: " .. (err ~= "" and err or "unknown error"))
+          end
+        end
+        break
+      end
+    end
+  end
+
+  -- Delete the local branch
+  if branch then
+    local branches = vim.fn.systemlist({ "git", "-C", repo, "branch", "--list", branch })
+    if #branches > 0 then
+      vim.fn.system({ "git", "-C", repo, "branch", "-D", branch })
+      table.insert(cleanup_msgs, "branch deleted: " .. branch)
+    end
+  end
+
+  -- Delete the remote branch
+  if branch then
+    vim.fn.system({ "git", "-C", repo, "push", "origin", "--delete", branch })
+    if vim.v.shell_error == 0 then
+      table.insert(cleanup_msgs, "remote branch deleted")
+    end
+  end
+
+  vim.notify(
+    string.format("pi-kanban #%s: DONE — %s", ticket_id, table.concat(cleanup_msgs, ", ")),
+    vim.log.levels.INFO
+  )
 end
 
 -- ── Trigger Pi orchestrator ─────────────────────────────────────────
@@ -324,7 +361,7 @@ function M.trigger_work(filepath, mode)
 
   local ticket_id = fm.id or "unknown"
   local flag = mode == "resume" and "--resume" or "--new"
-  local cmd = { vim.fn.expand("~/.local/bin/tripurr-ticket-work"), flag, filepath }
+  local cmd = { vim.fn.expand("~/.local/bin/pi-ticket-work"), flag, filepath }
 
   vim.notify(string.format("pi-kanban #%s: starting Pi (%s)...", ticket_id, mode), vim.log.levels.INFO)
 
@@ -425,7 +462,6 @@ local function new_ticket()
 
   vim.fn.writefile(new_lines, filepath)
   vim.cmd("edit " .. filepath)
-  vim.b._pi_kanban_old_status = "TODO"
 
   vim.notify(string.format("pi-kanban: created ticket #%s — %s", ticket_id, title), vim.log.levels.INFO)
 end
@@ -602,13 +638,13 @@ function M.setup()
     -- If we're on a ticket, use its ID
     local fm = parse_frontmatter(file)
     if fm and fm.id then
-      log = "/tmp/tripurr-ticket-" .. fm.id .. ".log"
+      log = "/tmp/pi-ticket-" .. fm.id .. ".log"
     else
       -- If on a board, extract ticket ID from line under cursor
       local line = vim.api.nvim_get_current_line()
       local id_match = line:match("%[#(%d+)%]")
       if id_match then
-        log = "/tmp/tripurr-ticket-" .. id_match .. ".log"
+        log = "/tmp/pi-ticket-" .. id_match .. ".log"
       end
     end
 
@@ -698,29 +734,10 @@ function M.setup()
     end
 
     vim.notify(string.format("pi-kanban: branch=%s worktree=%s", branch or "nil", worktree or "nil"), vim.log.levels.INFO)
-    vim.cmd("Oil " .. worktree)
+    vim.fn.system({ "tmux", "new-window", "-c", worktree, "-n", "ticket-" .. (fm.id or "x") })
   end, {})
 
-  -- Autocmds for status change detection (on ticket writes)
   local group = vim.api.nvim_create_augroup("PiKanban", { clear = true })
-
-  vim.api.nvim_create_autocmd({ "BufRead", "BufWritePre" }, {
-    group = group,
-    callback = function(args)
-      local file = vim.api.nvim_buf_get_name(args.buf)
-      for _, proj in pairs(PROJECTS) do
-        if file:match("^" .. vim.pesc(tickets_dir(proj)) .. "/.*%.md$") then
-          vim.b[args.buf]._pi_kanban_old_status = get_frontmatter_status(file)
-          break
-        end
-      end
-    end,
-  })
-
-  vim.api.nvim_create_autocmd("BufWritePost", {
-    group = group,
-    callback = on_buf_write_post,
-  })
 
   -- Global keymaps
   vim.keymap.set("n", "<leader>tb", open_kanban, { desc = "pi-kanban: board / projects" })
