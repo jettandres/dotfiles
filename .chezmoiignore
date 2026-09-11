@@ -6,7 +6,9 @@ README.md
 
 # ─── Fisher Plugin Manager ──────────────────────────────
 # Keep only fish_plugins (plugin list), ignore plugin-installed files
-.config/fish/conf.d/**
+.config/fish/conf.d/_tide_init.fish
+.config/fish/conf.d/fzf.fish
+.config/fish/conf.d/atuin.env.fish
 .config/fish/functions/**
 .config/fish/completions/**
 .config/fish/fish_plugins.d/**
@@ -22,3 +24,6 @@ README.md
 
 # ─── Universal Variables (machine-specific) ─────────────
 .config/fish/fish_variables
+
+# ─── Atuin session token + encryption key live here ─────
+.local/share/atuin/**
