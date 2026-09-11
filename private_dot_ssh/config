@@ -1,0 +1,8 @@
+Host tofu
+  User jett
+  IdentityFile ~/.ssh/id_ed25519
+  AddKeysToAgent yes
+
+Host *
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
