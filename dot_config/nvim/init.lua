@@ -37,6 +37,7 @@ vim.lsp.config('dockercompose', {
 vim.lsp.enable({
   'gopls',
   'luals',
+  'pyright',
   'tsls',
   'svelte',
   'css',
